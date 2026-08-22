@@ -13,7 +13,8 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 ## Verification
 
 - Build: `npm run build`
-- No linter is configured yet.
+- Lint/format: `npm run check` (Biome; applies safe fixes). Non-mutating CI check: `npm run ci`
+- Biome config: `biome.json` — 2-space indent, experimental `.astro` support enabled, respects `.gitignore`
 - TypeScript uses the `astro/tsconfigs/strict` preset. Run `astro check` to type-check `.astro` files (requires installing `@astrojs/check` first).
 
 ## Documentation
