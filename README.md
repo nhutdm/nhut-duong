@@ -5,6 +5,7 @@ Personal site built with [Astro](https://astro.build) — static output, TypeScr
 ## Tech Stack
 
 - [Astro](https://astro.build) ^7.2.4 (static output)
+- [Tailwind CSS](https://tailwindcss.com) v4 via the `@tailwindcss/vite` plugin
 - [Biome](https://biomejs.dev) 2.x for linting and formatting (incl. `.astro` files)
 - TypeScript with the `astro/tsconfigs/strict` preset
 
@@ -19,9 +20,14 @@ Personal site built with [Astro](https://astro.build) — static output, TypeScr
 /
 ├── public/            # Static assets (favicon, images)
 ├── src/
-│   └── pages/         # File-based routes
-│       └── index.astro
+│   ├── layouts/       # Shared page layouts (imports global.css)
+│   │   └── Layout.astro
+│   ├── pages/         # File-based routes
+│   │   └── index.astro
+│   └── styles/
+│       └── global.css # Tailwind CSS entry point
 ├── astro.config.mjs   # Astro configuration
+├── biome.json         # Biome lint/format configuration
 ├── tsconfig.json      # Extends astro/tsconfigs/strict
 └── dist/              # Build output (generated)
 ```

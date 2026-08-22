@@ -16,7 +16,9 @@
     "ci": "biome ci"
   },
   "dependencies": {
-    "astro": "^7.2.4"
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.2.4",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.10"

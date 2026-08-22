@@ -2,6 +2,8 @@
 
 Package manager: npm. Node >= 22.12.0 required.
 
+Styling: Tailwind CSS v4 via the `@tailwindcss/vite` plugin (no `tailwind.config` file; customize the theme with `@theme` in `src/styles/global.css`). Import `global.css` in a shared layout.
+
 When starting the dev server, use background mode:
 
 ```
