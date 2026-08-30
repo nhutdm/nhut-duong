@@ -1,0 +1,32 @@
+---
+import { getCollection } from "astro:content";
+import type { GetStaticPathsOptions, Page } from "astro";
+import Pagination from "@/components/Pagination.astro";
+import PostListItem from "@/components/PostListItem.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import type { BlogPost } from "@/types";
+import { sortItemsByDateDesc } from "@/utils/data-utils";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const posts = (await getCollection("blog")).sort(sortItemsByDateDesc);
+  return paginate(posts, { pageSize: 10 });
+}
+
+type Props = { page: Page<BlogPost> };
+
+const { page } = Astro.props;
+const blog = page.data;
+---
+
+<BaseLayout
+  title="Blog"
+  description="Insights from a full stack developer and consultant. Explore tech tips, coding journeys, and advice for developers and tech enthusiasts."
+>
+  <section>
+    <h1>Blog</h1>
+    <ul class="not-prose flex flex-col gap-10">
+      {blog.map((post) => <PostListItem post={post} class="flex flex-col gap-1" />)}
+    </ul>
+    <Pagination page={page} />
+  </section>
+</BaseLayout>

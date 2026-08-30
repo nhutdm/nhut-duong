@@ -1,0 +1,50 @@
+---
+import { getCollection } from "astro:content";
+import type { GetStaticPathsOptions, Page } from "astro";
+import Pagination from "@/components/Pagination.astro";
+import PostListItem from "@/components/PostListItem.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import type { BlogPost, TagData } from "@/types";
+import {
+  getAllTags,
+  getPostsByTag,
+  sortItemsByDateDesc,
+} from "@/utils/data-utils";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const posts = (await getCollection("blog")).sort(sortItemsByDateDesc);
+  const tags = getAllTags(posts);
+
+  return tags.flatMap((tag: TagData) => {
+    const filteredPosts = getPostsByTag(posts, tag.id);
+    return paginate(filteredPosts, {
+      params: { id: tag.id },
+      pageSize: 10,
+    });
+  });
+}
+
+type Props = { page: Page<BlogPost> };
+
+const { page } = Astro.props;
+const blog = page.data;
+const params = Astro.params;
+const allPosts = await getCollection("blog");
+const allTags = getAllTags(allPosts);
+const currentTag = allTags.find((tag) => {
+  return tag.id === params.id;
+});
+---
+
+<BaseLayout
+  title={`${currentTag?.name}`}
+  description={`Explore ${currentTag?.name} topics with insights, guides, and tips from a full stack developer. Ideal for developers and tech enthusiasts looking to learn more.`}
+>
+  <section>
+    <h1>{currentTag?.name}</h1>
+    <ul class="not-prose flex flex-col gap-10">
+      {blog.map((post) => <PostListItem post={post} hideTags={true} class="flex flex-col gap-1" />)}
+    </ul>
+    <Pagination page={page} />
+  </section>
+</BaseLayout>

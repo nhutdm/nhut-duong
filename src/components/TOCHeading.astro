@@ -1,0 +1,36 @@
+---
+import { cn } from "@/lib/utils";
+import type { TocItem } from "@/types";
+
+interface Props {
+  heading: TocItem;
+}
+
+const {
+  heading: { depth, slug, subheadings, text },
+} = Astro.props as Props;
+---
+
+<li>
+  <div class="relative">
+    <span
+      class="[&.highlight-bg]:bg-primary [&.readed]:bg-input absolute top-[5%] w-0.5 rounded transition-colors duration-300"
+    ></span>
+    <a
+      aria-label={`Scroll to section: ${text}`}
+      class={cn(
+        'line-clamp-2 px-3 py-1 ms-2 flex-1 text-foreground/80 transition-all hover:text-foreground [&.highlight]:font-medium [&.highlight]:text-primary [&.readed]:text-input',
+        depth > 2 && 'ps-7'
+      )}
+      href={`#${slug}`}
+      >{text}</a
+    >
+  </div>
+  {!!subheadings.length && (
+      <ul>
+        {subheadings.map((subheading) => (
+          <Astro.self heading={subheading} />
+        ))}
+      </ul>
+    )}
+</li>

@@ -1,0 +1,22 @@
+---
+import SocialLink from "@/components/SocialLink.astro";
+import siteConfig from "@/data/site-config";
+
+const currentYear = new Date().getFullYear();
+const socialLinks = siteConfig.socialLinks || [];
+---
+
+<footer class="mx-auto flex w-full max-w-5xl items-center justify-between py-8">
+  <div class="flex">
+    <p class="text-muted-foreground text-xs">
+      &#169; {currentYear}{' '}{siteConfig.title}
+    </p>
+  </div>
+  {socialLinks.length > 0 && (
+      <div class="flex items-center gap-2">
+        {(siteConfig.socialLinks || []).map((link) => (
+          <SocialLink {...link} />
+        ))}
+      </div>
+    )}
+</footer>

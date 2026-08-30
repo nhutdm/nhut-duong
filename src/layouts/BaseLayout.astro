@@ -1,0 +1,103 @@
+---
+import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
+import BaseHead from "@/components/BaseHead.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+import JsonLd from "@/components/JsonLd.astro";
+import siteConfig from "@/data/site-config";
+import type { BaseHeadProps, Thing, WithContext } from "@/types";
+import {
+  generateBreadcrumbItems,
+  generateBreadcrumbStructuredData,
+  shouldShowBreadcrumbs,
+} from "@/utils/breadcrumb-utils";
+import { createWebPageSchema, createWebSiteSchema } from "@/utils/schema-utils";
+
+export type Props = BaseHeadProps & {
+  showBreadcrumbs?: boolean;
+  lastModified?: Date;
+  customSchemas?: WithContext<Thing>[];
+};
+
+const {
+  showBreadcrumbs = true,
+  lastModified,
+  customSchemas = [],
+  ...head
+} = Astro.props;
+
+const siteUrl = Astro.site?.toString() ?? "https://nhutduong.com";
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+
+const shouldShow = showBreadcrumbs && shouldShowBreadcrumbs(Astro.url.pathname);
+const breadcrumbItems = shouldShow
+  ? await generateBreadcrumbItems(Astro.url.pathname)
+  : [];
+const breadcrumbStructuredData = shouldShow
+  ? generateBreadcrumbStructuredData(
+      breadcrumbItems,
+      Astro.url.pathname,
+      siteUrl,
+    )
+  : null;
+
+const schemas: WithContext<Thing>[] = [
+  createWebSiteSchema(siteUrl),
+  createWebPageSchema(
+    canonicalUrl,
+    head.title || siteConfig.title,
+    head.description || siteConfig.description,
+    lastModified,
+  ),
+];
+
+if (customSchemas.length > 0) {
+  schemas.push(...customSchemas);
+}
+---
+
+<!doctype html>
+<html lang="en" class="wrap-break-word antialiased">
+  <head>
+    <script is:inline>
+    // Apply the persisted (or preferred) theme before first paint to avoid a
+    // light-mode flash for dark-mode users. Runs before stylesheets load.
+    (() => {
+      const stored = localStorage.getItem("theme");
+      const theme =
+        stored === "light" || stored === "dark"
+          ? stored
+          : window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+      document.documentElement.classList.toggle("dark", theme === "dark");
+    })();
+    </script>
+    <BaseHead {...head} />
+    <Font cssVariable="--font-inter" preload />
+    <Font cssVariable="--font-newsreader" preload />
+    <JsonLd schema={schemas} />
+    {breadcrumbStructuredData && (
+        <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbStructuredData)} />
+      )}
+    <ClientRouter />
+  </head>
+  <body>
+    <div class="flex min-h-screen flex-col px-4 md:px-8">
+      <Header />
+      <main
+        class="prose sm:prose-lg mx-auto w-full max-w-5xl grow py-20 sm:py-24 lg:py-32"
+      >
+        {shouldShow && (
+            <div class="not-prose mb-8">
+              <Breadcrumbs items={breadcrumbItems} class="py-2" />
+            </div>
+          )}
+        <slot />
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>

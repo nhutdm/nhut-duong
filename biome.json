@@ -1,12 +1,12 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.10/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.11/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["**", "!!**/dist"]
+    "includes": ["**", "!!**/dist", "!!**/public"]
   },
   "formatter": {
     "enabled": true,
@@ -22,6 +22,26 @@
   "javascript": {
     "formatter": {
       "quoteStyle": "double"
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.astro"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useAnchorContent": "off"
+          }
+        }
+      }
+    }
+  ],
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    },
+    "formatter": {
+      "enabled": true
     }
   },
   "html": {

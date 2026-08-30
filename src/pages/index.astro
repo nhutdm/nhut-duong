@@ -1,16 +1,25 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import Hero from "@/components/Hero.astro";
+import PostListItem from "@/components/PostListItem.astro";
+import siteConfig from "@/data/site-config";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { sortItemsByDateDesc } from "@/utils/data-utils";
+
+const posts = (await getCollection("blog")).sort(sortItemsByDateDesc);
+const latestPosts = posts.slice(0, 5);
 ---
 
-<Layout title="nhut-duong">
-  <main
-    class="flex min-h-screen items-center justify-center bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950"
-  >
-    <section
-      class="mx-4 rounded-2xl border border-white/10 bg-white/5 px-10 py-12 text-center shadow-2xl backdrop-blur"
-    >
-      <h1 class="text-4xl font-bold tracking-tight text-white">nhut-duong</h1>
-      <p class="mt-4 text-lg text-slate-300">Built with Astro + Tailwind CSS</p>
-    </section>
-  </main>
-</Layout>
+<BaseLayout description={siteConfig.description} image={siteConfig.image}>
+  <Hero />
+  {latestPosts?.length > 0 && (
+      <section>
+        <h2>Recent Posts</h2>
+        <ul class="not-prose flex flex-col gap-5">
+          {latestPosts.map((post) => (
+            <PostListItem post={post} hideTags={true} class="flex flex-col justify-between gap-1 md:flex-row" />
+          ))}
+        </ul>
+      </section>
+    )}
+</BaseLayout>

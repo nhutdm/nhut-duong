@@ -1,0 +1,12 @@
+---
+import siteConfig from "@/data/site-config";
+
+const hero = siteConfig.hero;
+---
+
+{(hero?.title || hero?.text) && (
+    <section>
+      {hero.title && <h1>{hero.title}</h1>}
+      {hero.text && <p>{hero.text}</p>}
+    </section>
+  )}

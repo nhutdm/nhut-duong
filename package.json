@@ -16,11 +16,20 @@
     "ci": "biome ci"
   },
   "dependencies": {
+    "@astrojs/mdx": "^7.0.8",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.3",
+    "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.2.4",
+    "astro": "^7.2.9",
+    "astro-og-canvas": "^0.13.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.10"
+    "@biomejs/biome": "^2.5.11",
+    "schema-dts": "^2.0.0",
+    "wrangler": "^4.127.1"
   }
 }

@@ -1,0 +1,35 @@
+---
+import Badge from "@/components/Badge.astro";
+import FormattedDate from "@/components/FormattedDate.astro";
+import type { PostListItemProps } from "@/types";
+import { slugify } from "@/utils/common-utils";
+
+const {
+  post,
+  class: className,
+  hideDate = false,
+  hideTags = false,
+} = Astro.props as PostListItemProps;
+const { title, publishDate, tags = [] } = post.data;
+---
+
+<li class:list={[className]}>
+  <span class="font-medium"><a href={`/blog/${post.id}/`}>{title}</a></span>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+    {!hideDate && (
+        <span class="text-foreground/60 text-sm">
+          <FormattedDate date={publishDate} />
+        </span>
+      )}
+    {!hideTags && (
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+          {tags.length > 0 &&
+            tags.map((tag) => (
+              <Badge>
+                <a href={`/tags/${slugify(tag)}`}>{tag}</a>
+              </Badge>
+            ))}
+        </div>
+      )}
+  </div>
+</li>

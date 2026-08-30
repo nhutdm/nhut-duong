@@ -1,0 +1,83 @@
+---
+import { getCollection, render } from "astro:content";
+import Badge from "@/components/Badge.astro";
+import FormattedDate from "@/components/FormattedDate.astro";
+import TOC from "@/components/TOC.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import type { BlogPost } from "@/types";
+import { slugify } from "@/utils/common-utils";
+import { sortItemsByDateDesc } from "@/utils/data-utils";
+import {
+  createBlogPostingSchema,
+  createPersonSchema,
+} from "@/utils/schema-utils";
+
+export async function getStaticPaths() {
+  const posts = (await getCollection("blog")).sort(sortItemsByDateDesc);
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: {
+      post,
+    },
+  }));
+}
+
+type Props = { post: BlogPost };
+
+const { post } = Astro.props;
+const { title, publishDate, updatedDate, excerpt, tags = [], seo } = post.data;
+const ogImage = {
+  src: new URL(`og/${post.id}.png`, Astro.site).toString(),
+  alt: title,
+};
+const { Content, headings } = await render(post);
+
+const postUrl = new URL(`/blog/${post.id}`, Astro.site).toString();
+const authorSchema = createPersonSchema();
+const blogPostingSchema = createBlogPostingSchema(post, postUrl, authorSchema);
+---
+
+<BaseLayout
+  title={seo?.title ?? title}
+  description={seo?.description ?? excerpt}
+  image={seo?.image ?? ogImage}
+  pageType="article"
+  lastModified={updatedDate ?? publishDate}
+  customSchemas={[blogPostingSchema]}
+>
+  <div>
+    <h1>{title}</h1>
+    <div class="not-prose flex flex-wrap items-center gap-x-5 gap-y-2">
+      <span class="text-foreground/60 text-sm">
+        {updatedDate ? (
+            <>
+              Updated on <FormattedDate date={updatedDate} />
+            </>
+          ) : (
+            <>
+              Published on <FormattedDate date={publishDate} />
+            </>
+          )}
+      </span>
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+        {tags.length > 0 &&
+          tags.map((tag) => (
+            <Badge>
+              <a href={`/tags/${slugify(tag)}`}>{tag}</a>
+            </Badge>
+          ))}
+      </div>
+    </div>
+  </div>
+  <div class="lg:flex lg:items-start lg:gap-12">
+    <TOC
+      headings={headings}
+      class="not-prose sticky top-0 order-2 hidden pt-6 lg:block"
+    />
+    <article class="lg:max-w-2xl">
+      <div id="content">
+        <Content />
+      </div>
+    </article>
+  </div>
+</BaseLayout>

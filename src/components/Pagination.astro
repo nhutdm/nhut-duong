@@ -1,0 +1,45 @@
+---
+import type { Page } from "astro";
+
+type Props = {
+  page: Page<unknown>;
+};
+
+const { page } = Astro.props;
+const hasPrev = Boolean(page.url.prev);
+const hasNext = Boolean(page.url.next);
+---
+
+{(hasPrev || hasNext) && (
+    <nav aria-label="Pagination" class="not-prose mt-12 flex items-center justify-between text-sm">
+      {hasPrev ? (
+        <a
+          href={page.url.prev}
+          class="text-foreground/60 hover:text-foreground transition-colors"
+          rel="prev"
+        >
+          &larr; Previous
+        </a>
+      ) : (
+        <span class="text-foreground/30" aria-hidden="true">
+          &larr; Previous
+        </span>
+      )}
+      <span class="text-foreground/60">
+        Page {page.currentPage} of {page.lastPage}
+      </span>
+      {hasNext ? (
+        <a
+          href={page.url.next}
+          class="text-foreground/60 hover:text-foreground transition-colors"
+          rel="next"
+        >
+          Next &rarr;
+        </a>
+      ) : (
+        <span class="text-foreground/30" aria-hidden="true">
+          Next &rarr;
+        </span>
+      )}
+    </nav>
+  )}

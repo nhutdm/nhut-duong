@@ -1,0 +1,136 @@
+---
+import type { TOCProps } from "@/types";
+import { generateToc } from "@/utils/toc-utils";
+import TOCHeading from "./TOCHeading.astro";
+
+const { headings, class: className, ...props } = Astro.props as TOCProps;
+
+const toc = generateToc(headings);
+---
+
+<toc-heading class={className} {...props}>
+  <ul class="text-foreground/60 grid gap-3 pl-3 text-sm">
+    {toc.map((heading) => <TOCHeading heading={heading} />)}
+  </ul>
+</toc-heading>
+
+<script>
+interface TOCLink {
+  element: HTMLAnchorElement;
+  progressBar: HTMLElement;
+  slug: string;
+}
+
+interface HeadingProgress {
+  inView: boolean;
+  progress: number;
+}
+
+class TOC extends HTMLElement {
+  headings: HTMLElement[] = [];
+  tocLinks: TOCLink[] = [];
+  headingProgress: Record<string, HeadingProgress> = {};
+  private boundUpdate: (() => void) | null = null;
+  private ticking = false;
+
+  connectedCallback() {
+    this.headings = Array.from(
+      document.querySelectorAll(
+        "article h2, article h3, article h4, article h5, article h6",
+      ),
+    );
+    this.tocLinks = Array.from(this.querySelectorAll('a[href^="#"]')).map(
+      (link) => ({
+        element: link as HTMLAnchorElement,
+        progressBar: link.previousElementSibling as HTMLElement,
+        slug: (link.getAttribute("href") || "").substring(1),
+      }),
+    );
+
+    this.tocLinks.forEach((link) => {
+      link.element.addEventListener("click", (e) => {
+        e.preventDefault();
+        const directHeading = this.headings.find(
+          (heading) => heading.id === link.slug,
+        );
+        if (directHeading) {
+          history.pushState(
+            null,
+            directHeading.textContent || "",
+            link.element.getAttribute("href"),
+          );
+          directHeading.scrollIntoView({ behavior: "smooth" });
+        } else {
+          console.warn(`No heading found for slug: ${link.slug}`);
+        }
+      });
+    });
+
+    // rAF-throttled update: recalculates at most once per frame while
+    // scrolling/resizing, instead of polling on a fixed 100ms interval.
+    const requestUpdate = () => {
+      if (this.ticking) return;
+      this.ticking = true;
+      requestAnimationFrame(() => {
+        this.updatePositionAndStyle();
+        this.ticking = false;
+      });
+    };
+    this.boundUpdate = requestUpdate;
+
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    // Catch late layout shifts (e.g. images/fonts finishing loading).
+    window.addEventListener("load", requestUpdate);
+
+    // Initial paint + one deferred pass after the layout settles.
+    this.updatePositionAndStyle();
+    requestAnimationFrame(requestUpdate);
+  }
+
+  disconnectedCallback() {
+    if (this.boundUpdate) {
+      window.removeEventListener("scroll", this.boundUpdate);
+      window.removeEventListener("resize", this.boundUpdate);
+      window.removeEventListener("load", this.boundUpdate);
+      this.boundUpdate = null;
+    }
+  }
+
+  updatePositionAndStyle = () => {
+    const windowHeight = window.innerHeight;
+    const pageOffset =
+      window.scrollY -
+      ((document.querySelector("#content") as HTMLElement)?.offsetTop || 0);
+    const postOffset =
+      ((document.querySelector("#content") as HTMLElement)?.offsetHeight || 0) +
+      127;
+
+    this.headings.forEach((el, index) => {
+      const nextHeadingTop = this.headings[index + 1]?.offsetTop || postOffset;
+      const range = [
+        el.offsetTop - pageOffset,
+        nextHeadingTop - pageOffset - el.offsetHeight,
+      ];
+      const progress = (windowHeight - range[0]) / (range[1] - range[0]);
+
+      this.headingProgress[el.id] = {
+        inView: range[0] < windowHeight && range[1] > 0,
+        progress: Math.max(0, Math.min(1, progress)),
+      };
+    });
+
+    this.tocLinks.forEach(({ element: el, progressBar: bar, slug }) => {
+      const { inView, progress } = this.headingProgress[slug];
+      if (this.headingProgress[slug]) {
+        el.classList.toggle("highlight", inView);
+        bar.classList.toggle("readed", !inView && progress === 1);
+        bar.classList.toggle("highlight-bg", inView);
+        bar.style.setProperty("height", `${progress * 90}%`);
+      }
+    });
+  };
+}
+
+customElements.define("toc-heading", TOC);
+</script>

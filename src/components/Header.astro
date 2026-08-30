@@ -1,0 +1,23 @@
+---
+import Nav from "@/components/Nav.astro";
+import siteConfig from "@/data/site-config";
+---
+
+<header class="flex min-h-20 items-center">
+  <div class="mx-auto flex w-full max-w-5xl items-center justify-between">
+    <a class="flex" aria-label={siteConfig.title} href="/">
+      <svg
+        class="h-6 w-6 fill-current"
+        viewBox="0 0 340 340"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <path
+          d="M108.263 145.964V340H15V4.37017H103.884V63.5861H107.825C115.268 44.066 127.747 28.6247 145.261 17.2622C162.775 5.75407 184.011 0 208.969 0C232.321 0 252.681 5.09855 270.049 15.2956C287.418 25.4927 300.918 40.06 310.551 58.9974C320.184 77.7892 325 100.223 325 126.298V340H231.737V142.905C231.883 122.365 226.629 106.341 215.975 94.8329C205.32 83.1791 190.652 77.3522 171.97 77.3522C159.419 77.3522 148.326 80.0471 138.694 85.437C129.207 90.8269 121.763 98.6932 116.363 109.036C111.109 119.233 108.409 131.542 108.263 145.964Z"
+        ></path>
+      </svg>
+    </a>
+    <Nav />
+  </div>
+</header>

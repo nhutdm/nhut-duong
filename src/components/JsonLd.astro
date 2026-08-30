@@ -1,0 +1,9 @@
+---
+import type { JsonLdProps } from "@/types";
+
+const { schema } = Astro.props as JsonLdProps;
+const schemaJson = Array.isArray(schema) ? schema : [schema];
+const jsonLd = JSON.stringify(schemaJson, null, 0);
+---
+
+<script is:inline type="application/ld+json" set:html={jsonLd} />

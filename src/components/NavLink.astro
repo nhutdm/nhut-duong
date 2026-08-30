@@ -1,0 +1,21 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"a">;
+
+const { href, class: className, ...props } = Astro.props;
+
+const { pathname } = Astro.url;
+const normalize = (path: string) => path.replace(/\/+$/, "") || "/";
+const isActive =
+  typeof href === "string" &&
+  href !== "/" &&
+  normalize(pathname).startsWith(normalize(href));
+---
+
+<a
+  class:list={[className, isActive ? "text-foreground" : "text-foreground/60"]}
+  href={href}
+  {...props}
+  ><slot /></a
+>

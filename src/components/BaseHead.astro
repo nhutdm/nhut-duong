@@ -1,0 +1,74 @@
+---
+import siteConfig from "@/data/site-config";
+import type { BaseHeadProps } from "@/types";
+import "@/styles/global.css";
+
+const {
+  description = "",
+  author = siteConfig.author,
+  twitter = siteConfig.twitter,
+  image = siteConfig.image,
+  pageType = "website",
+} = Astro.props as BaseHeadProps;
+const title = [Astro.props.title, siteConfig.title].filter(Boolean).join(" | ");
+const resolvedImage = image?.src
+  ? {
+      src: new URL(image.src, Astro.site).toString(),
+      alt: image.alt,
+    }
+  : undefined;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+/**
+ * Normalizes the canonical URL: keeps file-extension URLs and query strings
+ * intact, and ensures a trailing slash on document paths.
+ */
+function formatCanonicalURL(url: string | URL) {
+  const urlValue = new URL(url);
+  const path = urlValue.pathname;
+  const hasFileExtension = /\.[a-z0-9]+$/i.test(path);
+
+  if (!hasFileExtension) {
+    urlValue.pathname = path.replace(/\/?$/, "/");
+  }
+  return urlValue.toString();
+}
+---
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="sitemap" href="/sitemap-index.xml">
+<link rel="alternate" type="application/rss+xml" href="/rss.xml" title="RSS">
+<link rel="canonical" href={formatCanonicalURL(canonicalURL)}>
+
+<meta name="description" content={description}>
+<meta name="author" content={author}>
+<meta name="generator" content={Astro.generator}>
+<meta name="robots" content="index, follow">
+<meta
+  name="theme-color"
+  content="#ffffff"
+  media="(prefers-color-scheme: light)"
+>
+<meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content={pageType}>
+<meta property="og:url" content={formatCanonicalURL(canonicalURL)}>
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+{resolvedImage?.src && <meta property="og:image" content={resolvedImage.src} />}
+{resolvedImage?.alt && <meta property="og:image:alt" content={resolvedImage.alt} />}
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content={twitter}>
+<meta name="twitter:site" content={twitter}>
+<meta name="twitter:url" content={formatCanonicalURL(canonicalURL)}>
+<meta name="twitter:title" content={title}>
+<meta name="twitter:description" content={description}>
+{resolvedImage?.src && <meta name="twitter:image" content={resolvedImage.src} />}
+{resolvedImage?.alt && <meta name="twitter:image:alt" content={resolvedImage?.alt} />}
