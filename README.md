@@ -23,8 +23,9 @@ Note: builds fetch fonts (Fontsource) and the OG-image font from CDNs on a cold 
 
 ```text
 /
-├── public/            # Static assets (favicons, manifest, og.png, avatar, robots.txt)
+├── public/            # Static assets (favicons, manifest, og.png, robots.txt)
 ├── src/
+│   ├── assets/        # Optimizable images imported from components (avatar.png)
 │   ├── components/    # Astro components (Badge, Breadcrumbs, TOC, ThemeToggle, ...)
 │   ├── content/       # Content collections (blog/*.md, pages/*.mdx)
 │   ├── content.config.ts  # Collection schemas (Zod via astro/zod)
