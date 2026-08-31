@@ -11,7 +11,7 @@ const hasNext = Boolean(page.url.next);
 ---
 
 {(hasPrev || hasNext) && (
-    <nav aria-label="Pagination" class="not-prose mt-12 flex items-center justify-between text-sm">
+    <nav aria-label="Pagination" class="mt-12 flex items-center justify-between text-sm">
       {hasPrev ? (
         <a
           href={page.url.prev}

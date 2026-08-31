@@ -14,8 +14,10 @@ const latestPosts = posts.slice(0, 5);
   <Hero />
   {latestPosts?.length > 0 && (
       <section>
-        <h2>Recent Posts</h2>
-        <ul class="not-prose flex flex-col gap-5">
+        <h2 class="font-serif text-2xl font-medium mt-10 mb-4 sm:text-3xl">
+          Recent Posts
+        </h2>
+        <ul class="flex flex-col gap-5">
           {latestPosts.map((post) => (
             <PostListItem post={post} hideTags={true} class="flex flex-col justify-between gap-1 md:flex-row" />
           ))}

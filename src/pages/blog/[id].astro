@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import Badge from "@/components/Badge.astro";
 import FormattedDate from "@/components/FormattedDate.astro";
+import Prose from "@/components/Prose.astro";
 import TOC from "@/components/TOC.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import type { BlogPost } from "@/types";
@@ -46,8 +47,8 @@ const blogPostingSchema = createBlogPostingSchema(post, postUrl, authorSchema);
   customSchemas={[blogPostingSchema]}
 >
   <div>
-    <h1>{title}</h1>
-    <div class="not-prose flex flex-wrap items-center gap-x-5 gap-y-2">
+    <h1 class="font-serif text-4xl font-medium sm:text-[2.5rem]">{title}</h1>
+    <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2">
       <span class="text-foreground/60 text-sm">
         {updatedDate ? (
             <>
@@ -72,11 +73,13 @@ const blogPostingSchema = createBlogPostingSchema(post, postUrl, authorSchema);
   <div class="lg:flex lg:items-start lg:gap-12">
     <TOC
       headings={headings}
-      class="not-prose sticky top-0 order-2 hidden pt-6 lg:block"
+      class="sticky top-0 order-2 hidden pt-6 lg:block"
     />
     <article class="lg:max-w-2xl">
       <div id="content">
-        <Content />
+        <Prose>
+          <Content />
+        </Prose>
       </div>
     </article>
   </div>

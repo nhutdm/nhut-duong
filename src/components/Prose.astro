@@ -1,0 +1,19 @@
+---
+// Reusable wrapper for rendered Markdown, per the Astro recipe
+// "Style rendered Markdown with Tailwind Typography".
+// - max-w-none: page containers control the column width (main max-w-5xl,
+//   blog article lg:max-w-2xl); the plugin's default 65ch cap would
+//   squeeze layouts like the About page's floated avatar.
+// - Customization lives in global.css as `.prose` CSS variables (theme
+//   tokens, dark-mode aware) instead of `dark:prose-invert` + element
+//   modifiers — the design system already provides the palette.
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={["prose sm:prose-lg max-w-none", className]}>
+  <slot />
+</div>

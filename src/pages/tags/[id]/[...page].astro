@@ -41,8 +41,10 @@ const currentTag = allTags.find((tag) => {
   description={`Explore ${currentTag?.name} topics with insights, guides, and tips from a full stack developer. Ideal for developers and tech enthusiasts looking to learn more.`}
 >
   <section>
-    <h1>{currentTag?.name}</h1>
-    <ul class="not-prose flex flex-col gap-10">
+    <h1 class="font-serif text-4xl font-medium mb-8 sm:text-[2.5rem]">
+      {currentTag?.name}
+    </h1>
+    <ul class="flex flex-col gap-10">
       {blog.map((post) => <PostListItem post={post} hideTags={true} class="flex flex-col gap-1" />)}
     </ul>
     <Pagination page={page} />

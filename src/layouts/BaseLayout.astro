@@ -87,11 +87,9 @@ if (customSchemas.length > 0) {
   <body>
     <div class="flex min-h-screen flex-col px-4 md:px-8">
       <Header />
-      <main
-        class="prose sm:prose-lg mx-auto w-full max-w-5xl grow py-20 sm:py-24 lg:py-32"
-      >
+      <main class="mx-auto w-full max-w-5xl grow py-20 sm:py-24 lg:py-32">
         {shouldShow && (
-            <div class="not-prose mb-8">
+            <div class="mb-8">
               <Breadcrumbs items={breadcrumbItems} class="py-2" />
             </div>
           )}

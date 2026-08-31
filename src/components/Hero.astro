@@ -6,7 +6,13 @@ const hero = siteConfig.hero;
 
 {(hero?.title || hero?.text) && (
     <section>
-      {hero.title && <h1>{hero.title}</h1>}
-      {hero.text && <p>{hero.text}</p>}
+      {hero.title && (
+        <h1 class="font-serif text-4xl font-medium sm:text-[2.5rem]">
+          {hero.title}
+        </h1>
+      )}
+      {hero.text && (
+        <p class="mt-5 text-base leading-relaxed sm:text-lg">{hero.text}</p>
+      )}
     </section>
   )}
