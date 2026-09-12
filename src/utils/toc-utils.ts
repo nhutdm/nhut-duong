@@ -11,11 +11,6 @@ function diveChildren(item: TocItem, depth: number): TocItem[] {
   );
 }
 
-/**
- * Generates a nested table of contents from markdown headings.
- * @throws Error when an orphan heading is detected (e.g. an `h3` with no
- *   preceding `h2`) — this fails the build on purpose.
- */
 export function generateToc(headings: readonly MarkdownHeading[]): TocItem[] {
   const bodyHeadings = [...headings.filter(({ depth }) => depth > 1)];
   const toc: TocItem[] = [];

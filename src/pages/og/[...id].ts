@@ -27,9 +27,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
           weight: "SemiBold",
         },
       },
-      fonts: [
-        "https://cdn.jsdelivr.net/fontsource/fonts/newsreader@latest/latin-500-normal.ttf",
-      ],
+      fonts: ["./src/assets/fonts/newsreader-latin-500-normal.ttf"],
     };
   },
 });

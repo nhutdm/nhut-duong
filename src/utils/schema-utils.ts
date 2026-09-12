@@ -8,9 +8,6 @@ import type {
 import siteConfig from "@/data/site-config";
 import type { BlogPost } from "@/types";
 
-/**
- * Resolves the site URL from the `site` config (exposed as import.meta.env.SITE)
- */
 function getSiteUrl(fallbackOrigin?: string): string {
   const site = import.meta.env.SITE;
   if (site) {
@@ -74,10 +71,6 @@ export function createPersonSchema(): WithContext<Person> {
   };
 }
 
-/**
- * Creates a WebPage schema for generic pages. `dateModified` is only
- * emitted when a meaningful content date is provided — never the build time.
- */
 export function createWebPageSchema(
   url: string,
   title: string,

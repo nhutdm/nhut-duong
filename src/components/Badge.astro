@@ -4,17 +4,28 @@ import { cn } from "@/lib/utils";
 
 type Props = Omit<HTMLAttributes<"div">, "class"> & {
   class?: string;
+  href?: string;
 };
 
-const { class: className, ...props } = Astro.props;
+const { href, class: className, ...props } = Astro.props;
+
+const baseClasses =
+  "inline-flex items-center rounded-md border border-transparent bg-primary px-2.5 py-0.5 text-xs font-semibold text-primary-foreground shadow transition-colors";
+
+const linkClasses = cn(
+  baseClasses,
+  "hover:bg-primary/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
+  className,
+);
+const divClasses = cn(baseClasses, className);
 ---
 
-<div
-  class={cn(
-    "inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80",
-    className,
+{href ? (
+    <a href={href} class={linkClasses} {...props}>
+      <slot />
+    </a>
+  ) : (
+    <div class={divClasses} {...props}>
+      <slot />
+    </div>
   )}
-  {...props}
->
-  <slot />
-</div>

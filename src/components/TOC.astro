@@ -1,23 +1,46 @@
 ---
+import TOCList from "@/components/TOCList.astro";
 import type { TOCProps } from "@/types";
 import { generateToc } from "@/utils/toc-utils";
-import TOCHeading from "./TOCHeading.astro";
 
 const { headings, class: className, ...props } = Astro.props as TOCProps;
 
 const toc = generateToc(headings);
 ---
 
-<toc-heading class={className} {...props}>
-  <ul class="text-foreground/60 grid gap-3 pl-3 text-sm">
-    {toc.map((heading) => <TOCHeading heading={heading} />)}
-  </ul>
-</toc-heading>
+<nav
+  aria-label="Table of contents"
+  class:list={["lg:sticky lg:top-0", className]}
+  {...props}
+>
+  <details class="group rounded-lg border lg:hidden">
+    <summary
+      class="flex cursor-pointer select-none items-center justify-between px-4 py-3 text-sm font-medium"
+    >
+      On this page
+      <svg
+        class="size-4 transition-transform duration-200 group-open:rotate-90"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="m9 18 6-6-6-6"></path>
+      </svg>
+    </summary>
+    <TOCList headings={toc} class="px-4 pt-1 pb-4" />
+  </details>
+  <TOCList headings={toc} class="hidden pt-6 lg:block" />
+</nav>
 
 <script>
 interface TOCLink {
   element: HTMLAnchorElement;
-  progressBar: HTMLElement;
+  progressBar: HTMLElement | null;
   slug: string;
 }
 
@@ -30,10 +53,12 @@ class TOC extends HTMLElement {
   headings: HTMLElement[] = [];
   tocLinks: TOCLink[] = [];
   headingProgress: Record<string, HeadingProgress> = {};
+  private content: HTMLElement | null = null;
   private boundUpdate: (() => void) | null = null;
   private ticking = false;
 
   connectedCallback() {
+    this.content = document.querySelector<HTMLElement>("#content");
     this.headings = Array.from(
       document.querySelectorAll(
         "article h2, article h3, article h4, article h5, article h6",
@@ -42,7 +67,7 @@ class TOC extends HTMLElement {
     this.tocLinks = Array.from(this.querySelectorAll('a[href^="#"]')).map(
       (link) => ({
         element: link as HTMLAnchorElement,
-        progressBar: link.previousElementSibling as HTMLElement,
+        progressBar: link.previousElementSibling as HTMLElement | null,
         slug: (link.getAttribute("href") || "").substring(1),
       }),
     );
@@ -50,24 +75,22 @@ class TOC extends HTMLElement {
     this.tocLinks.forEach((link) => {
       link.element.addEventListener("click", (e) => {
         e.preventDefault();
-        const directHeading = this.headings.find(
-          (heading) => heading.id === link.slug,
-        );
-        if (directHeading) {
-          history.pushState(
-            null,
-            directHeading.textContent || "",
-            link.element.getAttribute("href"),
-          );
-          directHeading.scrollIntoView({ behavior: "smooth" });
-        } else {
+        const heading = this.headings.find((h) => h.id === link.slug);
+        if (!heading) {
           console.warn(`No heading found for slug: ${link.slug}`);
+          return;
         }
+        history.pushState(null, "", link.element.getAttribute("href"));
+        const reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        heading.scrollIntoView({
+          behavior: reduceMotion ? "auto" : "smooth",
+        });
+        this.closest("details")?.removeAttribute("open");
       });
     });
 
-    // rAF-throttled update: recalculates at most once per frame while
-    // scrolling/resizing, instead of polling on a fixed 100ms interval.
     const requestUpdate = () => {
       if (this.ticking) return;
       this.ticking = true;
@@ -80,10 +103,8 @@ class TOC extends HTMLElement {
 
     window.addEventListener("scroll", requestUpdate, { passive: true });
     window.addEventListener("resize", requestUpdate);
-    // Catch late layout shifts (e.g. images/fonts finishing loading).
     window.addEventListener("load", requestUpdate);
 
-    // Initial paint + one deferred pass after the layout settles.
     this.updatePositionAndStyle();
     requestAnimationFrame(requestUpdate);
   }
@@ -97,37 +118,42 @@ class TOC extends HTMLElement {
     }
   }
 
+  private docTop(el: HTMLElement): number {
+    return el.getBoundingClientRect().top + window.scrollY;
+  }
+
   updatePositionAndStyle = () => {
-    const windowHeight = window.innerHeight;
-    const pageOffset =
-      window.scrollY -
-      ((document.querySelector("#content") as HTMLElement)?.offsetTop || 0);
-    const postOffset =
-      ((document.querySelector("#content") as HTMLElement)?.offsetHeight || 0) +
-      127;
+    if (!this.offsetParent) return;
 
-    this.headings.forEach((el, index) => {
-      const nextHeadingTop = this.headings[index + 1]?.offsetTop || postOffset;
-      const range = [
-        el.offsetTop - pageOffset,
-        nextHeadingTop - pageOffset - el.offsetHeight,
-      ];
-      const progress = (windowHeight - range[0]) / (range[1] - range[0]);
+    const content = this.content;
+    if (!content) return;
 
-      this.headingProgress[el.id] = {
-        inView: range[0] < windowHeight && range[1] > 0,
+    const readingLine = window.scrollY + window.innerHeight * 0.2;
+    const contentBottom = this.docTop(content) + content.offsetHeight;
+
+    this.headings.forEach((heading, index) => {
+      const next = this.headings[index + 1];
+      const top = this.docTop(heading);
+      const nextTop = next ? this.docTop(next) : contentBottom;
+      const progress = (readingLine - top) / Math.max(nextTop - top, 1);
+      this.headingProgress[heading.id] = {
+        inView: readingLine >= top && readingLine < nextTop,
         progress: Math.max(0, Math.min(1, progress)),
       };
     });
 
     this.tocLinks.forEach(({ element: el, progressBar: bar, slug }) => {
-      const { inView, progress } = this.headingProgress[slug];
-      if (this.headingProgress[slug]) {
-        el.classList.toggle("highlight", inView);
-        bar.classList.toggle("readed", !inView && progress === 1);
-        bar.classList.toggle("highlight-bg", inView);
-        bar.style.setProperty("height", `${progress * 90}%`);
+      const state = this.headingProgress[slug];
+      if (!state) return;
+      el.classList.toggle("highlight", state.inView);
+      if (state.inView) {
+        el.setAttribute("aria-current", "true");
+      } else {
+        el.removeAttribute("aria-current");
       }
+      bar?.classList.toggle("readed", !state.inView && state.progress === 1);
+      bar?.classList.toggle("highlight-bg", state.inView);
+      bar?.style.setProperty("height", `${state.progress * 90}%`);
     });
   };
 }

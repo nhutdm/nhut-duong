@@ -10,13 +10,25 @@ const posts = (await getCollection("blog")).sort(sortItemsByDateDesc);
 const latestPosts = posts.slice(0, 5);
 ---
 
-<BaseLayout description={siteConfig.description} image={siteConfig.image}>
+<BaseLayout
+  title={`${siteConfig.title} — Full Stack Developer & Consultant`}
+  description={siteConfig.description}
+  image={siteConfig.image}
+>
   <Hero />
   {latestPosts?.length > 0 && (
       <section>
-        <h2 class="font-serif text-2xl font-medium mt-10 mb-4 sm:text-3xl">
-          Recent Posts
-        </h2>
+        <div class="mt-10 mb-4 flex items-baseline justify-between gap-4">
+          <h2 class="font-serif text-2xl font-medium sm:text-3xl">
+            Recent Posts
+          </h2>
+          <a
+            href="/blog/"
+            class="text-foreground/60 hover:text-foreground text-sm transition-colors"
+          >
+            View all posts &rarr;
+          </a>
+        </div>
         <ul class="flex flex-col gap-5">
           {latestPosts.map((post) => (
             <PostListItem post={post} hideTags={true} class="flex flex-col justify-between gap-1 md:flex-row" />

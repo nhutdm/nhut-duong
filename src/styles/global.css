@@ -60,6 +60,31 @@
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-wrap: balance;
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-ring;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    scroll-behavior: auto;
+    transition-duration: 0.01ms;
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+  }
 }
 
 .prose {
@@ -84,4 +109,17 @@
 .prose :is(h1, h2, h3, h4, h5, h6) {
   font-family: var(--font-newsreader);
   font-weight: 500;
+}
+
+.prose p {
+  text-wrap: pretty;
+}
+
+.prose .anchor-link {
+  @apply text-muted-foreground ml-1.5 font-normal no-underline opacity-0 transition-opacity duration-150;
+}
+
+.prose :is(h2, h3, h4):hover .anchor-link,
+.prose .anchor-link:focus-visible {
+  @apply opacity-100;
 }

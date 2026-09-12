@@ -9,8 +9,14 @@ const {
   twitter = siteConfig.twitter,
   image = siteConfig.image,
   pageType = "website",
+  publishedTime,
+  modifiedTime,
+  tags: articleTags,
 } = Astro.props as BaseHeadProps;
-const title = [Astro.props.title, siteConfig.title].filter(Boolean).join(" | ");
+const rawTitle = Astro.props.title || siteConfig.title;
+const title = rawTitle.includes(siteConfig.title)
+  ? rawTitle
+  : `${rawTitle} | ${siteConfig.title}`;
 const resolvedImage = image?.src
   ? {
       src: new URL(image.src, Astro.site).toString(),
@@ -19,10 +25,6 @@ const resolvedImage = image?.src
   : undefined;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-/**
- * Normalizes the canonical URL: keeps file-extension URLs and query strings
- * intact, and ensures a trailing slash on document paths.
- */
 function formatCanonicalURL(url: string | URL) {
   const urlValue = new URL(url);
   const path = urlValue.pathname;
@@ -63,6 +65,7 @@ function formatCanonicalURL(url: string | URL) {
 <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)">
 
 <meta property="og:type" content={pageType}>
+<meta property="og:site_name" content={siteConfig.title}>
 <meta property="og:url" content={formatCanonicalURL(canonicalURL)}>
 <meta property="og:title" content={title}>
 <meta property="og:description" content={description}>
@@ -77,3 +80,14 @@ function formatCanonicalURL(url: string | URL) {
 <meta name="twitter:description" content={description}>
 {resolvedImage?.src && <meta name="twitter:image" content={resolvedImage.src} />}
 {resolvedImage?.alt && <meta name="twitter:image:alt" content={resolvedImage?.alt} />}
+
+{pageType === "article" &&
+  publishedTime && (
+    <meta property="article:published_time" content={publishedTime.toISOString()} />
+  )}
+{pageType === "article" &&
+  modifiedTime && (
+    <meta property="article:modified_time" content={modifiedTime.toISOString()} />
+  )}
+{pageType === "article" &&
+  articleTags?.map((tag) => <meta property="article:tag" content={tag} />)}

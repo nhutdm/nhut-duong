@@ -15,18 +15,27 @@ import {
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog")).sort(sortItemsByDateDesc);
-  return posts.map((post) => ({
+  return posts.map((post, index) => ({
     params: { id: post.id },
     props: {
       post,
+      newerPost: posts[index - 1] ?? null,
+      olderPost: posts[index + 1] ?? null,
     },
   }));
 }
 
-type Props = { post: BlogPost };
+type Props = {
+  post: BlogPost;
+  newerPost: BlogPost | null;
+  olderPost: BlogPost | null;
+};
 
-const { post } = Astro.props;
+const { post, newerPost, olderPost } = Astro.props;
 const { title, publishDate, updatedDate, excerpt, tags = [], seo } = post.data;
+
+const wordCount = post.body?.trim().split(/\s+/).length ?? 0;
+const readingTime = Math.max(1, Math.round(wordCount / 220));
 const ogImage = {
   src: new URL(`og/${post.id}.png`, Astro.site).toString(),
   alt: title,
@@ -44,6 +53,9 @@ const blogPostingSchema = createBlogPostingSchema(post, postUrl, authorSchema);
   image={seo?.image ?? ogImage}
   pageType="article"
   lastModified={updatedDate ?? publishDate}
+  publishedTime={publishDate}
+  modifiedTime={updatedDate ?? publishDate}
+  tags={tags}
   customSchemas={[blogPostingSchema]}
 >
   <div>
@@ -60,21 +72,17 @@ const blogPostingSchema = createBlogPostingSchema(post, postUrl, authorSchema);
             </>
           )}
       </span>
+      <span class="text-foreground/60 text-sm">{readingTime} min read</span>
       <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
         {tags.length > 0 &&
           tags.map((tag) => (
-            <Badge>
-              <a href={`/tags/${slugify(tag)}`}>{tag}</a>
-            </Badge>
+            <Badge href={`/tags/${slugify(tag)}/`}>{tag}</Badge>
           ))}
       </div>
     </div>
   </div>
-  <div class="lg:flex lg:items-start lg:gap-12">
-    <TOC
-      headings={headings}
-      class="sticky top-0 order-2 hidden pt-6 lg:block"
-    />
+  <div class="mt-10 lg:flex lg:items-start lg:gap-12">
+    <TOC headings={headings} class="order-2 mb-8 lg:mb-0" />
     <article class="lg:max-w-2xl">
       <div id="content">
         <Prose>
@@ -83,4 +91,34 @@ const blogPostingSchema = createBlogPostingSchema(post, postUrl, authorSchema);
       </div>
     </article>
   </div>
+
+  {(olderPost || newerPost) && (
+    <nav
+      aria-label="Post navigation"
+      class="mt-12 grid gap-4 border-t pt-8 sm:grid-cols-2"
+    >
+      {olderPost ? (
+        <a
+          href={`/blog/${olderPost.id}/`}
+          class="hover:text-foreground/80 text-foreground/60 transition-colors"
+        >
+          <span class="text-xs">
+            &larr; Older post
+          </span>
+          <span class="block font-medium">{olderPost.data.title}</span>
+        </a>
+      ) : (
+        <span class="hidden sm:block" aria-hidden="true" />
+      )}
+      {newerPost && (
+        <a
+          href={`/blog/${newerPost.id}/`}
+          class="hover:text-foreground/80 text-foreground/60 transition-colors sm:text-right"
+        >
+          <span class="text-xs">Newer post &rarr;</span>
+          <span class="block font-medium">{newerPost.data.title}</span>
+        </a>
+      )}
+    </nav>
+  )}
 </BaseLayout>

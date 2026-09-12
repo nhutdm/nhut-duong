@@ -16,6 +16,7 @@ const isActive =
 <a
   class:list={[className, isActive ? "text-foreground" : "text-foreground/60"]}
   href={href}
+  aria-current={isActive ? "page" : undefined}
   {...props}
   ><slot /></a
 >

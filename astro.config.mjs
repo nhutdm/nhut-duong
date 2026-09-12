@@ -8,11 +8,6 @@ import { defineConfig, fontProviders } from "astro/config";
 
 const blogDir = new URL("./src/content/blog/", import.meta.url);
 
-/**
- * Derives a `lastmod` date for a blog post URL from its frontmatter
- * (`updatedDate` preferred over `publishDate`). Returns undefined for
- * non-blog URLs or unreadable files, omitting lastmod for them.
- */
 function getBlogLastmod(url) {
   const match = url.match(/\/blog\/([^/]+)\/?$/);
   const slug = match?.[1];

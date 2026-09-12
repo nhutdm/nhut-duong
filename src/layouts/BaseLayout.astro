@@ -62,8 +62,6 @@ if (customSchemas.length > 0) {
 <html lang="en" class="wrap-break-word antialiased">
   <head>
     <script is:inline>
-    // Apply the persisted (or preferred) theme before first paint to avoid a
-    // light-mode flash for dark-mode users. Runs before stylesheets load.
     (() => {
       const stored = localStorage.getItem("theme");
       const theme =
@@ -80,14 +78,27 @@ if (customSchemas.length > 0) {
     <Font cssVariable="--font-newsreader" preload />
     <JsonLd schema={schemas} />
     {breadcrumbStructuredData && (
-        <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbStructuredData)} />
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify(breadcrumbStructuredData).replace(/</g, "\\u003c")}
+        />
       )}
     <ClientRouter />
   </head>
   <body>
+    <a
+      href="#main"
+      class="bg-primary text-primary-foreground sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 rounded-md px-4 py-2 text-sm font-medium"
+    >
+      Skip to content
+    </a>
     <div class="flex min-h-screen flex-col px-4 md:px-8">
       <Header />
-      <main class="mx-auto w-full max-w-5xl grow py-20 sm:py-24 lg:py-32">
+      <main
+        id="main"
+        class="mx-auto w-full max-w-5xl grow py-12 sm:py-16 lg:py-20"
+      >
         {shouldShow && (
             <div class="mb-8">
               <Breadcrumbs items={breadcrumbItems} class="py-2" />

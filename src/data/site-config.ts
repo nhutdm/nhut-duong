@@ -1,7 +1,6 @@
 export type Image = {
   src: string;
   alt?: string;
-  caption?: string;
 };
 
 export type Link = {
@@ -16,6 +15,7 @@ export type SocialLink = Link & {
 export type Hero = {
   title?: string;
   text?: string;
+  cta?: Link[];
 };
 
 export type SiteConfig = {
@@ -28,6 +28,11 @@ export type SiteConfig = {
   socialLinks?: SocialLink[];
   hero?: Hero;
 };
+
+const siteUrl = (import.meta.env.SITE ?? "https://nhutduong.com").replace(
+  /\/$/,
+  "",
+);
 
 const siteConfig: SiteConfig = {
   title: "Nhut Duong",
@@ -52,7 +57,7 @@ const siteConfig: SiteConfig = {
   socialLinks: [
     {
       text: "RSS",
-      href: "https://nhutduong.com/rss.xml",
+      href: `${siteUrl}/rss.xml`,
       icon: "rss",
     },
     {
@@ -74,6 +79,16 @@ const siteConfig: SiteConfig = {
   hero: {
     title: "Hey, I'm Nhut.",
     text: "I'm a full stack developer and consultant based in Ho Chi Minh City, Vietnam, obsessed with creating innovative digital solutions. I blend sleek front-end design with robust back-end development to build seamless, impactful experiences.",
+    cta: [
+      {
+        text: "Read the Blog",
+        href: "/blog",
+      },
+      {
+        text: "About Me",
+        href: "/about",
+      },
+    ],
   },
 };
 

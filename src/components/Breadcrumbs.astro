@@ -23,14 +23,7 @@ const { items, class: className, ...props } = Astro.props;
               {item.label}
             </a>
           ) : (
-            // biome-ignore lint/a11y/useSemanticElements: intentional non-interactive current-page indicator (shadcn pattern)
-            // biome-ignore lint/a11y/useFocusableInteractive: span is not focusable; role is metadata for AT only
-            <span
-              role="link"
-              aria-disabled="true"
-              aria-current="page"
-              class="text-foreground font-normal"
-            >
+            <span aria-current="page" class="text-foreground font-normal">
               {item.label}
             </span>
           )}

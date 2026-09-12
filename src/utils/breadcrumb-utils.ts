@@ -2,10 +2,6 @@ import { getCollection } from "astro:content";
 import type { BreadcrumbItem } from "@/types";
 import { slugify } from "@/utils/common-utils";
 
-/**
- * Parse URL path and generate breadcrumb items, capped at 3 levels
- * (Home + two more) to keep the trail compact.
- */
 export async function generateBreadcrumbItems(
   path: string,
 ): Promise<BreadcrumbItem[]> {
@@ -16,7 +12,6 @@ export async function generateBreadcrumbItems(
   items.push({
     label: "Home",
     href: "/",
-    isCurrent: pathSegments.length === 0,
   });
 
   if (pathSegments.length === 0) {
@@ -32,39 +27,33 @@ export async function generateBreadcrumbItems(
       items.push({
         label: "Blog",
         href: isLast ? undefined : "/blog",
-        isCurrent: isLast,
       });
     } else if (prevSegment === "blog" && isLast) {
       const postTitle = await getPostTitle(segment);
       items.push({
         label: postTitle || formatLabel(segment),
         href: undefined,
-        isCurrent: true,
       });
     } else if (segment === "tags") {
       items.push({
         label: "Tags",
         href: isLast ? undefined : "/tags",
-        isCurrent: isLast,
       });
     } else if (prevSegment === "tags" && isLast) {
       const tagName = await getTagName(segment);
       items.push({
         label: tagName || formatLabel(segment),
         href: undefined,
-        isCurrent: true,
       });
     } else if (/^\d+$/.test(segment)) {
       items.push({
         label: `${segment}`,
         href: undefined,
-        isCurrent: true,
       });
     } else {
       items.push({
         label: formatLabel(segment),
         href: isLast ? undefined : `/${pathSegments.slice(0, i + 1).join("/")}`,
-        isCurrent: isLast,
       });
     }
   }

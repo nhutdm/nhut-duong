@@ -36,9 +36,7 @@ const tagsWithCount = tags
         </h2>
         <div class="mt-4 flex flex-wrap gap-2">
           {tagsWithCount.map((tag) => (
-              <Badge>
-                <a href={`/tags/${tag.id}/`}>{tag.name}</a>
-              </Badge>
+              <Badge href={`/tags/${tag.id}/`}>{tag.name}</Badge>
             ))}
         </div>
       </div>
@@ -52,7 +50,9 @@ const tagsWithCount = tags
                 <a href={`/tags/${tag.id}/`} class="font-medium">
                   <div class="flex items-center justify-between rounded-lg border p-3">
                     {tag.name}
-                    <Badge>{tag.count}</Badge>
+                    <Badge>
+                      {tag.count}{' '}<span class="sr-only">posts</span>
+                    </Badge>
                   </div>
                 </a>
               ))}

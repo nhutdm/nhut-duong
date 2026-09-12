@@ -1,0 +1,19 @@
+---
+import TOCHeading from "@/components/TOCHeading.astro";
+import type { TocItem } from "@/types";
+
+interface Props {
+  headings: TocItem[];
+  class?: string;
+}
+
+const { headings, class: className } = Astro.props;
+---
+
+<toc-heading class={className}>
+  <ul class="text-foreground/60 grid gap-3 pl-3 text-sm">
+    {headings.map((heading) => (
+      <TOCHeading heading={heading} />
+    ))}
+  </ul>
+</toc-heading>
