@@ -15,6 +15,7 @@ export interface BaseHeadProps extends Record<string, unknown> {
   publishedTime?: Date;
   modifiedTime?: Date;
   tags?: string[];
+  noindex?: boolean;
 }
 
 export interface PostListItemProps extends Record<string, unknown> {

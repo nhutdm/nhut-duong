@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import type { GetStaticPathsOptions, Page } from "astro";
 import Pagination from "@/components/Pagination.astro";
 import PostListItem from "@/components/PostListItem.astro";
+import siteConfig from "@/data/site-config";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import type { BlogPost, TagData } from "@/types";
 import {
@@ -37,8 +38,10 @@ const currentTag = allTags.find((tag) => {
 ---
 
 <BaseLayout
-  title={`${currentTag?.name}`}
-  description={`Explore ${currentTag?.name} topics with insights, guides, and tips from a full stack developer. Ideal for developers and tech enthusiasts looking to learn more.`}
+  title={page.currentPage > 1
+      ? `${currentTag?.name} ${siteConfig.titleSeparator} Page ${page.currentPage}`
+      : `${currentTag?.name}`}
+  description={`Insights, guides, and tips on ${currentTag?.name} from a full stack developer and consultant, for developers and tech enthusiasts.`}
 >
   <section>
     <h1 class="font-serif text-4xl font-medium mb-8 sm:text-[2.5rem]">

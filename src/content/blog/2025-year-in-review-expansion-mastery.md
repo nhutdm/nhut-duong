@@ -1,5 +1,5 @@
 ---
-title: '2025 Year in Review: Expansion, Mastery, and New Horizons'
+title: '2025 Year in Review: Expansion & Mastery'
 excerpt: Looking back at an extraordinary 2025, marked by technical breakthroughs, career advancement, and deepening family connections.
 publishDate: '2025-12-27'
 tags:

@@ -4,7 +4,7 @@ import type { BaseHeadProps } from "@/types";
 import "@/styles/global.css";
 
 const {
-  description = "",
+  description = siteConfig.description,
   author = siteConfig.author,
   twitter = siteConfig.twitter,
   image = siteConfig.image,
@@ -12,11 +12,17 @@ const {
   publishedTime,
   modifiedTime,
   tags: articleTags,
+  noindex = false,
 } = Astro.props as BaseHeadProps;
 const rawTitle = Astro.props.title || siteConfig.title;
+const brandedTitle = [rawTitle, siteConfig.title].join(
+  ` ${siteConfig.titleSeparator} `,
+);
 const title = rawTitle.includes(siteConfig.title)
   ? rawTitle
-  : `${rawTitle} | ${siteConfig.title}`;
+  : brandedTitle.length <= 60
+    ? brandedTitle
+    : rawTitle;
 const resolvedImage = image?.src
   ? {
       src: new URL(image.src, Astro.site).toString(),
@@ -56,7 +62,7 @@ function formatCanonicalURL(url: string | URL) {
 <meta name="description" content={description}>
 <meta name="author" content={author}>
 <meta name="generator" content={Astro.generator}>
-<meta name="robots" content="index, follow">
+<meta name="robots" content={noindex ? "noindex, follow" : "index, follow"}>
 <meta
   name="theme-color"
   content="#ffffff"

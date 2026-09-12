@@ -1,6 +1,6 @@
 ---
 title: Mastering Meetings in Software Development
-excerpt: Unlock the power of effective meetings in software development. Learn strategies to transform collaboration, boost productivity, and drive project success in tech teams.
+excerpt: Unlock the power of effective meetings with strategies to transform collaboration, boost productivity, and drive project success in tech teams.
 publishDate: '2024-12-14'
 tags:
   - Software Development

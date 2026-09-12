@@ -1,5 +1,5 @@
 ---
-title: Clear Git History to Start Fresh with a New Initial Commit Guide
+title: Clear Git History for a Fresh Initial Commit
 excerpt: A comprehensive guide to wiping Git commit history and starting fresh. Perfect for removing sensitive data or restructuring your development workflow.
 publishDate: '2024-10-26'
 tags:

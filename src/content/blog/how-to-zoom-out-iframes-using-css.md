@@ -1,6 +1,6 @@
 ---
 title: How to Zoom Out iframe Using CSS
-excerpt: Learn how to zoom out iframe using CSS transforms. This simple technique allows you to resize embedded content without altering the source. Discover tips and considerations.
+excerpt: Learn how to zoom out iframes with CSS transforms — resize embedded content without altering the source, with tips and key considerations.
 publishDate: '2024-09-09'
 tags:
   - CSS

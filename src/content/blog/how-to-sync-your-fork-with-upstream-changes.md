@@ -1,6 +1,6 @@
 ---
-title: How to Synchronize Your Fork Repository with Upstream Changes
-excerpt: Learn how to keep your forked repository in sync with the original while preserving your commits. Step-by-step guide to rebasing and resolving conflicts efficiently.
+title: How to Sync Your Fork with Upstream Changes
+excerpt: Keep your fork in sync with the upstream repository while preserving your commits — a step-by-step guide to rebasing and resolving conflicts.
 publishDate: '2024-09-24'
 tags:
   - Git

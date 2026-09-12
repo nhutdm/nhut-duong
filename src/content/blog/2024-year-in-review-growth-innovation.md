@@ -1,5 +1,5 @@
 ---
-title: '2024 Year in Review: Growth, Innovation, and Family Foundations'
+title: '2024 Year in Review: Growth & Innovation'
 excerpt: Reflecting on a transformative 2024, where I boosted customer satisfaction, achieved health goals, and started blogging to share career insights.
 publishDate: '2024-12-29'
 tags:

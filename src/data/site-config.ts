@@ -20,6 +20,7 @@ export type Hero = {
 
 export type SiteConfig = {
   title: string;
+  titleSeparator: string;
   description: string;
   author: string;
   twitter: string;
@@ -36,6 +37,7 @@ const siteUrl = (import.meta.env.SITE ?? "https://nhutduong.com").replace(
 
 const siteConfig: SiteConfig = {
   title: "Nhut Duong",
+  titleSeparator: "|",
   description:
     "I'm a full stack developer and consultant based in Ho Chi Minh City, Vietnam, obsessed with crafting seamless, impactful digital solutions.",
   author: "Nhut Duong",

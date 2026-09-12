@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import type { GetStaticPathsOptions, Page } from "astro";
 import Pagination from "@/components/Pagination.astro";
 import PostListItem from "@/components/PostListItem.astro";
+import siteConfig from "@/data/site-config";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import type { BlogPost } from "@/types";
 import { sortItemsByDateDesc } from "@/utils/data-utils";
@@ -19,7 +20,9 @@ const blog = page.data;
 ---
 
 <BaseLayout
-  title="Blog"
+  title={page.currentPage > 1
+      ? `Blog ${siteConfig.titleSeparator} Page ${page.currentPage}`
+      : "Blog"}
   description="Insights from a full stack developer and consultant. Explore tech tips, coding journeys, and advice for developers and tech enthusiasts."
 >
   <section>
