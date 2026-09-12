@@ -26,11 +26,16 @@ function getBlogLastmod(url) {
 // https://astro.build/config
 export default defineConfig({
   site: "https://nhutduong.com",
+  markdown: {
+    shikiConfig: {
+      theme: "css-variables",
+    },
+  },
   fonts: [
     {
       provider: fontProviders.fontsource(),
-      name: "Inter",
-      cssVariable: "--font-inter",
+      name: "DM Sans",
+      cssVariable: "--font-dm-sans",
       weights: ["100 900"],
       styles: ["normal"],
       subsets: ["latin"],
@@ -38,12 +43,21 @@ export default defineConfig({
     },
     {
       provider: fontProviders.fontsource(),
-      name: "Newsreader",
-      cssVariable: "--font-newsreader",
-      weights: ["200 800"],
+      name: "Source Serif 4",
+      cssVariable: "--font-source-serif",
+      weights: ["200 900"],
       styles: ["normal"],
       subsets: ["latin"],
       fallbacks: ["serif"],
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: "IBM Plex Mono",
+      cssVariable: "--font-ibm-plex-mono",
+      weights: ["400"],
+      styles: ["normal"],
+      subsets: ["latin"],
+      fallbacks: ["monospace"],
     },
   ],
   integrations: [

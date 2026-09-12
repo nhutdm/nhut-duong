@@ -14,7 +14,13 @@ const isActive =
 ---
 
 <a
-  class:list={[className, isActive ? "text-foreground" : "text-foreground/60"]}
+  class:list={[
+    "border-b-2 pb-0.5 transition-colors",
+    className,
+    isActive
+      ? "border-gold font-medium text-foreground"
+      : "border-transparent text-foreground/60",
+  ]}
   href={href}
   aria-current={isActive ? "page" : undefined}
   {...props}

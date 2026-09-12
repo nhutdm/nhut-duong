@@ -3,36 +3,48 @@
 
 @custom-variant dark (&:where(.dark *));
 
+/*
+  Signal design system (DESIGN.md — designmd.app/library/signal)
+  Light mode = bone paper canvas. Dark mode = deep navy canvas.
+  Muted gold (#c8a870) is the single accent, constant across modes;
+  on light surfaces the focus ring darkens to #9a7a44 for WCAG 3:1.
+*/
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --border: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --radius: 0.625rem;
-  --input: oklch(0.922 0 0);
+  --background: #f0ece3;
+  --foreground: #1c2644;
+  --primary: #1c2644;
+  --primary-foreground: #f0ece3;
+  --muted-foreground: #5b6377;
+  --accent: #e5dfd2;
+  --accent-foreground: #1c2644;
+  --border: #d7d1c3;
+  --ring: #9a7a44;
+  --input: #d7d1c3;
+  --radius: 0.25rem;
+  --gold: #c8a870;
+  --gold-hover: #b8976a;
+  --navy: #1c2644;
+  --navy-alt: #232f55;
+  --link: #1c2644;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --ring: oklch(0.556 0 0);
-  --input: oklch(1 0 0 / 15%);
+  --background: #1c2644;
+  --foreground: #e2dcd0;
+  --primary: #e2dcd0;
+  --primary-foreground: #1c2644;
+  --muted-foreground: #a9b1c6;
+  --accent: #232f55;
+  --accent-foreground: #e2dcd0;
+  --border: #e2dcd0 / 15%;
+  --ring: #c8a870;
+  --input: #e2dcd0 / 20%;
+  --link: #c8a870;
 }
 
 @theme inline {
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-newsreader);
+  --font-sans: var(--font-dm-sans);
+  --font-serif: var(--font-source-serif);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
@@ -42,7 +54,12 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-border: var(--border);
   --color-ring: var(--ring);
-  --radius-md: calc(var(--radius) - 2px);
+  --color-gold: var(--gold);
+  --color-gold-hover: var(--gold-hover);
+  --color-navy: var(--navy);
+  --color-navy-alt: var(--navy-alt);
+  --color-link: var(--link);
+  --radius-md: var(--radius);
   --radius-lg: var(--radius);
   --color-input: var(--input);
 }
@@ -88,27 +105,53 @@
 }
 
 .prose {
-  --tw-prose-body: var(--color-foreground);
-  --tw-prose-headings: var(--color-foreground);
-  --tw-prose-lead: var(--color-foreground);
-  --tw-prose-links: var(--color-foreground);
-  --tw-prose-bold: var(--color-foreground);
-  --tw-prose-counters: var(--color-foreground);
-  --tw-prose-bullets: var(--color-foreground);
-  --tw-prose-hr: var(--color-border);
-  --tw-prose-quotes: var(--color-foreground);
-  --tw-prose-quote-borders: var(--color-border);
-  --tw-prose-captions: var(--color-foreground);
-  --tw-prose-code: var(--color-foreground);
-  --tw-prose-pre-code: var(--color-zinc-200);
-  --tw-prose-pre-bg: var(--color-zinc-800);
-  --tw-prose-th-borders: var(--color-border);
-  --tw-prose-td-borders: var(--color-border);
+  --tw-prose-body: var(--foreground);
+  --tw-prose-headings: var(--foreground);
+  --tw-prose-lead: var(--foreground);
+  --tw-prose-links: var(--link);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-counters: var(--foreground);
+  --tw-prose-bullets: var(--foreground);
+  --tw-prose-hr: var(--border);
+  --tw-prose-quotes: var(--foreground);
+  --tw-prose-quote-borders: var(--gold);
+  --tw-prose-captions: var(--muted-foreground);
+  --tw-prose-code: var(--foreground);
+  --tw-prose-pre-code: #e2dcd0;
+  --tw-prose-pre-bg: var(--navy-alt);
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-td-borders: var(--border);
 }
 
 .prose :is(h1, h2, h3, h4, h5, h6) {
-  font-family: var(--font-newsreader);
-  font-weight: 500;
+  font-family: var(--font-source-serif);
+  font-weight: 600;
+}
+
+.prose :is(h2, h3, h4) {
+  scroll-margin-top: 1.5rem;
+}
+
+.prose :is(pre, :not(pre) > code) {
+  font-family: var(--font-ibm-plex-mono);
+}
+
+/* Syntax highlighting (Shiki css-variables theme) driven by Signal tokens:
+   navy-alt canvas, bone text, gold for keywords — color as punctuation. */
+.prose pre.astro-code {
+  --astro-code-background: var(--navy-alt);
+  --astro-code-foreground: #e2dcd0;
+  --astro-code-token-comment: #98a1ba;
+  --astro-code-token-keyword: #c8a870;
+  --astro-code-token-string: #9fc4a4;
+  --astro-code-token-string-expression: #9fc4a4;
+  --astro-code-token-function: #f0ece3;
+  --astro-code-token-constant: #d9c08e;
+  --astro-code-token-variable: #e2dcd0;
+  --astro-code-token-operator: #c8a870;
+  --astro-code-token-entity: #d9c08e;
+  --astro-code-token-tag: #c8a870;
+  --astro-code-token-attribute: #d9c08e;
 }
 
 .prose p {
