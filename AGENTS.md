@@ -1,3 +1,32 @@
+## Design System
+
+This project uses the DESIGN.md format to define visual rules. The `DESIGN.md` file at the repo root (Signal, synced from designmd.app/library/signal) is the source of truth for all UI decisions.
+
+### Mandatory instructions for UI
+
+1. BEFORE generating any visual component, read DESIGN.md completely
+2. Use EXCLUSIVELY the tokens defined in the YAML front matter
+3. Follow the typographic scale without inventing intermediate sizes
+4. Spacing must be multiples of the base value (0.5rem / 8px)
+5. Every interactive element needs: hover, focus, disabled
+6. The "Do's and Don'ts" section of DESIGN.md is inviolable
+
+### Quick token reference (DESIGN.md summary)
+
+- Primary (deep navy): #1c2644 · Secondary (navy alt): #232f55
+- Tertiary (bone/fg): #e2dcd0 · Neutral (muted gold accent): #c8a870 · Surface (bone paper): #f0ece3
+- Display/serif: Source Serif 4 700 · Body/UI: DM Sans 400 · Code: IBM Plex Mono
+- Typography: h1 2.5rem/700 · body-md 1rem/400
+- Spacing: sm 1.0rem · md 2.0rem · lg 4.0rem (base unit 0.5rem)
+- Corner radius: 4px
+- The site renders light mode only: surface #f0ece3 is the page canvas; navy is reserved for full-bleed sections and code blocks
+
+### Files that must NOT be edited
+
+- DESIGN.md — read-only source of truth; propose changes via a report, never edit
+- AGENTS.md — this file
+- package-lock.json — managed by npm
+
 ## Development
 
 Package manager: npm. Node >= 22.12.0 required.
@@ -6,9 +35,9 @@ Astro 7 static site (`site: https://nhutduong.com`). Integrations: `@astrojs/mdx
 
 Deployment: Cloudflare Workers static assets via `wrangler.jsonc` (`assets.directory: ./dist`, `not_found_handling: "404-page"` serves the built `404.html`). `npx wrangler dev` / `npx wrangler deploy` operate on the built `dist/` — run `npm run build` first. Wrangler local state is in `.wrangler/` (gitignored); `wrangler` is a devDependency.
 
-Styling: Tailwind CSS v4 via the `@tailwindcss/vite` plugin (pure CSS-first config — no `tailwind.config` file). Design system: `DESIGN.md` (Signal — deep navy `#1c2644` / bone `#e2dcd0` / muted gold `#c8a870`; light mode = bone-paper canvas, dark mode = navy canvas; Display/serif = Source Serif 4 700, body/UI = DM Sans, code = IBM Plex Mono; 4px radii). Theme tokens are CSS variables in `:root` / `.dark` in `src/styles/global.css`, re-exported via `@theme inline`; typography prose overrides live in the same file as `.prose` CSS variables. Rendered Markdown is wrapped in the reusable `Prose.astro` component (per the Astro "Style rendered Markdown with Tailwind Typography" recipe) — it sets `max-w-none` so page containers control the column width (the plugin's default 65ch cap would squeeze layouts like the About page's floated avatar), and page chrome outside it carries its own utility classes, so `not-prose` escapes are never needed. Fonts are registered in that same `@theme inline` block as `--font-sans: var(--font-inter)` / `--font-serif: var(--font-newsreader)` (variables provided by the Fonts API). Gotcha: `@theme inline` does not emit theme variables as real CSS custom properties — hand-written CSS must reference the Fonts API variables directly (see the `.prose :is(h1…h6)` rule using `var(--font-newsreader)`), and the prose heading rule relies on `:is()` (specificity 0,1,1) beating the typography plugin's `:where()` rules. Dark mode uses the class strategy: a blocking inline script in `BaseLayout.astro`'s `<head>` applies the persisted/preferred theme before first paint, `ThemeToggle.astro` toggles it, and `astro:after-swap` re-applies it after view transitions.
+Styling: Tailwind CSS v4 via the `@tailwindcss/vite` plugin (pure CSS-first config — no `tailwind.config` file). Design system: `DESIGN.md` (Signal, synced from designmd.app/library/signal — deep navy `#1c2644` primary / bone `#e2dcd0` / muted gold `#c8a870` accent on bone-paper surface `#f0ece3`; Display/serif = Source Serif 4 700, body/UI = DM Sans, code = IBM Plex Mono; 4px radii). Theme tokens are CSS variables in `:root` in `src/styles/global.css`, re-exported via `@theme inline`; typography prose overrides live in the same file as `.prose` CSS variables. Rendered Markdown is wrapped in the reusable `Prose.astro` component (per the Astro "Style rendered Markdown with Tailwind Typography" recipe) — it sets `max-w-none` so page containers control the column width (the plugin's default 65ch cap would squeeze layouts like the About page's floated avatar), and page chrome outside it carries its own utility classes, so `not-prose` escapes are never needed. Fonts are registered in that same `@theme inline` block as `--font-sans: var(--font-inter)` / `--font-serif: var(--font-newsreader)` (variables provided by the Fonts API). Gotcha: `@theme inline` does not emit theme variables as real CSS custom properties — hand-written CSS must reference the Fonts API variables directly (see the `.prose :is(h1…h6)` rule using `var(--font-newsreader)`), and the prose heading rule relies on `:is()` (specificity 0,1,1) beating the typography plugin's `:where()` rules. The site is light-mode only (single fixed theme): no `.dark` tokens, no theme toggle, no pre-paint theme script; the browser `theme-color` meta is fixed at `#f0ece3`.
 
-Zero-JS architecture: no framework islands and no React. All UI is `.astro` components; interactivity (theme toggle, TOC progress) is vanilla `<script>` / custom elements. The only shipped JS is the `ClientRouter` view-transition script. `cn()` (clsx + tailwind-merge) is the only export of `src/lib/utils.ts`, used by `Badge.astro` / `Breadcrumbs.astro` for class merging. If a truly interactive component is ever needed, re-add a framework integration rather than hydrating static markup.
+Zero-JS architecture: no framework islands and no React. All UI is `.astro` components; interactivity (TOC progress) is vanilla `<script>` / custom elements. The only shipped JS is the `ClientRouter` view-transition script. `cn()` (clsx + tailwind-merge) is the only export of `src/lib/utils.ts`, used by `Badge.astro` / `Breadcrumbs.astro` for class merging. If a truly interactive component is ever needed, re-add a framework integration rather than hydrating static markup.
 
 When starting the dev server, use background mode:
 
