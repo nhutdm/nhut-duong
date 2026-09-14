@@ -7,15 +7,26 @@ import { slugify } from "@/utils/common-utils";
 const {
   post,
   class: className,
+  style,
   hideTags = false,
 } = Astro.props as PostListItemProps;
 const { title, publishDate, tags = [] } = post.data;
 ---
 
-<li class:list={[className]}>
-  <span class="font-medium"><a href={`/blog/${post.id}/`}>{title}</a></span>
+<li
+  class:list={[
+    "bg-paper text-paper-foreground rounded-md border border-paper-foreground/10 shadow-sm p-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md md:p-5",
+    className,
+  ]}
+  style={style}
+>
+  <span class="font-medium">
+    <a href={`/blog/${post.id}/`} class="text-paper-foreground hover:underline">
+      {title}
+    </a>
+  </span>
   <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
-    <span class="text-foreground/60 text-sm">
+    <span class="text-paper-foreground/60 font-mono text-xs">
       <FormattedDate date={publishDate} />
     </span>
     {!hideTags && (

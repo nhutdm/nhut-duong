@@ -39,7 +39,7 @@ const siteConfig: SiteConfig = {
   title: "Nhut Duong",
   titleSeparator: "|",
   description:
-    "I'm a full stack developer and consultant based in Ho Chi Minh City, Vietnam, obsessed with crafting seamless, impactful digital solutions.",
+    "I'm a full stack developer and consultant based in Ho Chi Minh City, Vietnam, obsessed with crafting durable, well-crafted digital solutions.",
   author: "Nhut Duong",
   twitter: "@nhutdm",
   image: {
@@ -80,7 +80,7 @@ const siteConfig: SiteConfig = {
   ],
   hero: {
     title: "Hey, I'm Nhut.",
-    text: "I'm a full stack developer and consultant based in Ho Chi Minh City, Vietnam, obsessed with creating innovative digital solutions. I blend sleek front-end design with robust back-end development to build seamless, impactful experiences.",
+    text: "I'm a full stack developer and consultant based in Ho Chi Minh City, Vietnam, obsessed with creating innovative digital solutions. I blend sleek front-end design with robust back-end development to build durable, well-crafted experiences.",
     cta: [
       {
         text: "Read the Blog",

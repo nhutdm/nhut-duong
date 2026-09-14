@@ -21,6 +21,7 @@ export interface BaseHeadProps extends Record<string, unknown> {
 export interface PostListItemProps extends Record<string, unknown> {
   post: BlogPost;
   class?: string;
+  style?: string;
   hideTags?: boolean;
 }
 

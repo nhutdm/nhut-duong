@@ -8,15 +8,27 @@ const hero = siteConfig.hero;
 {(hero?.title || hero?.text) && (
     <section>
       {hero.title && (
-        <h1 class="font-serif text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-tight">
+        <h1 class="sig-enter font-serif text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-tight">
           {hero.title}
         </h1>
       )}
       {hero.text && (
-        <p class="mt-5 text-base leading-relaxed sm:text-lg">{hero.text}</p>
+        <p
+          class="sig-enter mt-5 max-w-[72ch] text-base leading-relaxed sm:text-lg"
+          style="animation-delay: 80ms"
+        >
+          {hero.text}
+        </p>
       )}
+      <div
+        class="sig-enter bg-gold mt-8 h-px w-16"
+        style="animation-delay: 160ms"
+      />
       {hero.cta && hero.cta.length > 0 && (
-        <div class="mt-8 flex flex-wrap items-center gap-3">
+        <div
+          class="sig-enter mt-8 flex flex-wrap items-center gap-3"
+          style="animation-delay: 240ms"
+        >
           {hero.cta.map((link, index) => (
             <Button
               href={link.href}
