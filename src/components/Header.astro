@@ -3,8 +3,12 @@ import Nav from "@/components/Nav.astro";
 import siteConfig from "@/data/site-config";
 ---
 
-<header class="flex min-h-20 items-center">
-  <div class="mx-auto flex w-full max-w-5xl items-center justify-between">
+<header
+  class="sticky top-0 z-[100] flex min-h-20 items-center border-b border-gold bg-background"
+>
+  <div
+    class="mx-auto flex w-full max-w-5xl items-center justify-between px-4 md:px-8"
+  >
     <a class="flex" aria-label={siteConfig.title} href="/">
       <svg
         class="h-5 w-auto fill-current"
