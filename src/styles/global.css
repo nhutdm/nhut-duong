@@ -1,13 +1,11 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@custom-variant dark (&:where(.dark *));
-
 /*
   Signal design system (DESIGN.md — designmd.app/library/signal)
-  Light mode = bone paper canvas. Dark mode = deep navy canvas.
-  Muted gold (#c8a870) is the single accent, constant across modes;
-  on light surfaces the focus ring darkens to #9a7a44 for WCAG 3:1.
+  Single fixed light theme: bone paper canvas with navy text.
+  Muted gold (#c8a870) is the single accent;
+  the focus ring darkens to #9a7a44 for WCAG 3:1 on light surfaces.
 */
 :root {
   --background: #f0ece3;
@@ -26,20 +24,6 @@
   --navy: #1c2644;
   --navy-alt: #232f55;
   --link: #1c2644;
-}
-
-.dark {
-  --background: #1c2644;
-  --foreground: #e2dcd0;
-  --primary: #e2dcd0;
-  --primary-foreground: #1c2644;
-  --muted-foreground: #a9b1c6;
-  --accent: #232f55;
-  --accent-foreground: #e2dcd0;
-  --border: #e2dcd0 / 15%;
-  --ring: #c8a870;
-  --input: #e2dcd0 / 20%;
-  --link: #c8a870;
 }
 
 @theme inline {

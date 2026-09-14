@@ -61,18 +61,6 @@ if (customSchemas.length > 0) {
 <!doctype html>
 <html lang="en" class="wrap-break-word antialiased">
   <head>
-    <script is:inline>
-    (() => {
-      const stored = localStorage.getItem("theme");
-      const theme =
-        stored === "light" || stored === "dark"
-          ? stored
-          : window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light";
-      document.documentElement.classList.toggle("dark", theme === "dark");
-    })();
-    </script>
     <BaseHead {...head} />
     <Font cssVariable="--font-dm-sans" preload />
     <Font cssVariable="--font-source-serif" preload />
