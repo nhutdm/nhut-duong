@@ -11,7 +11,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
   getImageOptions: (_, page: (typeof pages)[number]) => {
     return {
       title: page.data.title,
-      bgGradient: [[240, 236, 227]],
+      bgGradient: [[28, 38, 68]],
       border: { color: [200, 168, 112], width: 10 },
       padding: 60,
       logo: {
@@ -20,7 +20,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
       },
       font: {
         title: {
-          color: [28, 38, 68],
+          color: [226, 220, 208],
           size: 60,
           lineHeight: 1.25,
           families: ["Source Serif 4"],

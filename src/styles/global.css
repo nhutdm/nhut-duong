@@ -3,27 +3,30 @@
 
 /*
   Signal design system (DESIGN.md — designmd.app/library/signal)
-  Single fixed light theme: bone paper canvas with navy text.
-  Muted gold (#c8a870) is the single accent;
-  the focus ring darkens to #9a7a44 for WCAG 3:1 on light surfaces.
+  Navy-dominant canvas: deep navy page ground with bone text;
+  bone-paper cards (#f0ece3) with navy text; muted gold (#c8a870)
+  reserved for rules and highlights (6.6:1 on navy).
+  Focus ring = gold, 6.6:1 on navy (WCAG 3:1 non-text met).
 */
 :root {
-  --background: #f0ece3;
-  --foreground: #1c2644;
-  --primary: #1c2644;
-  --primary-foreground: #f0ece3;
-  --muted-foreground: #5b6377;
-  --accent: #e5dfd2;
-  --accent-foreground: #1c2644;
-  --border: #d7d1c3;
-  --ring: #9a7a44;
-  --input: #d7d1c3;
+  --background: #1c2644;
+  --foreground: #e2dcd0;
+  --primary: #e2dcd0;
+  --primary-foreground: #1c2644;
+  --muted-foreground: #98a1ba;
+  --accent: #232f55;
+  --accent-foreground: #e2dcd0;
+  --border: #6b7a9e;
+  --ring: #c8a870;
+  --input: #6b7a6e;
   --radius: 0.25rem;
   --gold: #c8a870;
   --gold-hover: #b8976a;
   --navy: #1c2644;
   --navy-alt: #232f55;
-  --link: #1c2644;
+  --link: #e2dcd0;
+  --paper: #f0ece3;
+  --paper-foreground: #1c2644;
 }
 
 @theme inline {
@@ -43,6 +46,8 @@
   --color-navy: var(--navy);
   --color-navy-alt: var(--navy-alt);
   --color-link: var(--link);
+  --color-paper: var(--paper);
+  --color-paper-foreground: var(--paper-foreground);
   --radius-md: var(--radius);
   --radius-lg: var(--radius);
   --color-input: var(--input);
