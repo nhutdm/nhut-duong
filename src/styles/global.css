@@ -119,7 +119,7 @@
   --tw-prose-bold: var(--foreground);
   --tw-prose-counters: var(--foreground);
   --tw-prose-bullets: var(--foreground);
-  --tw-prose-hr: var(--border);
+  --tw-prose-hr: var(--gold);
   --tw-prose-quotes: var(--foreground);
   --tw-prose-quote-borders: var(--gold);
   --tw-prose-captions: var(--muted-foreground);

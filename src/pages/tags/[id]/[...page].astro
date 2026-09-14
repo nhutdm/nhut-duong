@@ -44,11 +44,18 @@ const currentTag = allTags.find((tag) => {
   description={`Insights, guides, and tips on ${currentTag?.name} from a full stack developer and consultant, for developers and tech enthusiasts.`}
 >
   <section>
-    <h1 class="font-serif text-4xl font-medium mb-8 sm:text-[2.5rem]">
+    <h1 class="sig-enter font-serif text-4xl font-bold tracking-tight mb-8">
       {currentTag?.name}
     </h1>
-    <ul class="flex flex-col gap-10">
-      {blog.map((post) => <PostListItem post={post} hideTags={true} class="flex flex-col gap-1" />)}
+    <ul class="flex flex-col gap-5">
+      {blog.map((post, index) => (
+        <PostListItem
+          post={post}
+          hideTags={true}
+          class="sig-enter flex flex-col gap-1"
+          style={`animation-delay: ${index * 80}ms`}
+        />
+      ))}
     </ul>
     <Pagination page={page} />
   </section>

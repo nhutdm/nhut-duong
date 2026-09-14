@@ -10,11 +10,11 @@ type Props = Omit<HTMLAttributes<"div">, "class"> & {
 const { href, class: className, ...props } = Astro.props;
 
 const baseClasses =
-  "inline-flex items-center rounded-md border border-transparent bg-primary px-2.5 py-0.5 text-xs font-semibold text-primary-foreground shadow transition-colors";
+  "inline-flex items-center rounded-md border border-paper-foreground/20 bg-transparent px-2.5 py-0.5 text-xs font-medium text-paper-foreground/70 transition-colors duration-200";
 
 const linkClasses = cn(
   baseClasses,
-  "hover:bg-primary/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
+  "hover:border-paper-foreground/40 hover:text-paper-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
   className,
 );
 const divClasses = cn(baseClasses, className);

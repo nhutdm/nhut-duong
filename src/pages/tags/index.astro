@@ -24,7 +24,7 @@ const tagsWithCount = tags
   description="Explore topics I write about, from software development to web technologies. Click on any tag to discover related articles and insights."
 >
   <section>
-    <h1 class="font-serif text-4xl font-semibold sm:text-[2.5rem]">Tags</h1>
+    <h1 class="sig-enter font-serif text-4xl font-bold tracking-tight">Tags</h1>
     <p class="mt-5 mb-6 text-base leading-relaxed sm:text-lg">
       Explore topics I write about, from software development to web
       technologies. Click on any tag to discover related articles and insights.
@@ -36,7 +36,12 @@ const tagsWithCount = tags
         </h2>
         <div class="mt-4 flex flex-wrap gap-2">
           {tagsWithCount.map((tag) => (
-              <Badge href={`/tags/${tag.id}/`}>{tag.name}</Badge>
+              <Badge
+                href={`/tags/${tag.id}/`}
+                class="border-foreground/20 text-foreground/70 hover:border-foreground/40 hover:text-foreground"
+              >
+                {tag.name}
+              </Badge>
             ))}
         </div>
       </div>
@@ -50,7 +55,7 @@ const tagsWithCount = tags
                 <a href={`/tags/${tag.id}/`} class="font-medium">
                   <div class="flex items-center justify-between rounded-lg border p-3">
                     {tag.name}
-                    <Badge>
+                    <Badge class="border-foreground/20 text-foreground/70">
                       {tag.count}{' '}<span class="sr-only">posts</span>
                     </Badge>
                   </div>
