@@ -15,7 +15,7 @@ const hasNext = Boolean(page.url.next);
       {hasPrev ? (
         <a
           href={page.url.prev}
-          class="text-foreground/60 hover:text-foreground transition-colors"
+          class="text-foreground/60 hover:text-foreground transition-colors underline-offset-4 hover:underline"
           rel="prev"
         >
           &larr; Previous
@@ -31,7 +31,7 @@ const hasNext = Boolean(page.url.next);
       {hasNext ? (
         <a
           href={page.url.next}
-          class="text-foreground/60 hover:text-foreground transition-colors"
+          class="text-foreground/60 hover:text-foreground transition-colors underline-offset-4 hover:underline"
           rel="next"
         >
           Next &rarr;

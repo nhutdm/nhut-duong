@@ -18,7 +18,7 @@
   --accent-foreground: #e2dcd0;
   --border: #6b7a9e;
   --ring: #c8a870;
-  --input: #6b7a6e;
+  --input: #6b7a9e;
   --radius: 0.25rem;
   --gold: #c8a870;
   --gold-hover: #b8976a;
@@ -159,6 +159,8 @@
   --astro-code-token-entity: #d9c08e;
   --astro-code-token-tag: #c8a870;
   --astro-code-token-attribute: #d9c08e;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 }
 
 .prose p {
