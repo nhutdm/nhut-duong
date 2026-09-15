@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import Button from "@/components/Button.astro";
 import Hero from "@/components/Hero.astro";
 import PostListItem from "@/components/PostListItem.astro";
 import siteConfig from "@/data/site-config";
@@ -8,6 +9,8 @@ import { sortItemsByDateDesc } from "@/utils/data-utils";
 
 const posts = (await getCollection("blog")).sort(sortItemsByDateDesc);
 const latestPosts = posts.slice(0, 5);
+
+const mailto = "mailto:hello@nhutduong.com";
 ---
 
 <BaseLayout
@@ -16,6 +19,228 @@ const latestPosts = posts.slice(0, 5);
   image={siteConfig.image}
 >
   <Hero />
+
+  <section class="py-16 sm:py-24 lg:py-32">
+    <div class="mb-10 flex flex-col gap-2">
+      <h2 class="font-serif text-2xl font-bold tracking-tight">What I do</h2>
+      <p class="text-muted-foreground max-w-[72ch] text-sm sm:text-base">
+        Three ways I help teams ship software that holds up over time.
+      </p>
+    </div>
+    <ul class="flex flex-col gap-5">
+      <li
+        class="sig-enter bg-paper text-paper-foreground flex items-start gap-4 rounded-md border border-paper-foreground/10 p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md md:p-5"
+      >
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="text-gold size-6 shrink-0"
+        >
+          <path d="m18 16 4-4-4-4"></path>
+          <path d="m6 8-4 4 4 4"></path>
+          <path d="m14.5 4-5 16"></path>
+        </svg>
+        <div class="flex flex-col gap-1">
+          <h3 class="font-medium text-lg">Full-Stack Delivery</h3>
+          <p class="text-paper-foreground/70 text-sm">
+            End-to-end web applications, from data model to deployment, on
+            modern TypeScript stacks.
+          </p>
+        </div>
+      </li>
+      <li
+        class="sig-enter bg-paper text-paper-foreground flex items-start gap-4 rounded-md border border-paper-foreground/10 p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md md:p-5"
+        style="animation-delay: 80ms"
+      >
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="text-gold size-6 shrink-0"
+        >
+          <circle cx="12" cy="12" r="10"></circle>
+          <polygon
+            points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"
+          ></polygon>
+        </svg>
+        <div class="flex flex-col gap-1">
+          <h3 class="font-medium text-lg">Technical Consulting</h3>
+          <p class="text-paper-foreground/70 text-sm">
+            Architecture reviews, team practices, and pragmatic roadmaps for
+            growing products.
+          </p>
+        </div>
+      </li>
+      <li
+        class="sig-enter bg-paper text-paper-foreground flex items-start gap-4 rounded-md border border-paper-foreground/10 p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md md:p-5"
+        style="animation-delay: 160ms"
+      >
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="text-gold size-6 shrink-0"
+        >
+          <path d="M12 20h9"></path>
+          <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+        </svg>
+        <div class="flex flex-col gap-1">
+          <h3 class="font-medium text-lg">Writing and Knowledge Sharing</h3>
+          <p class="text-paper-foreground/70 text-sm">
+            Field notes from real projects, published as long-form articles and
+            guides.
+          </p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="testimonials-band py-16 sm:py-24">
+    <div class="mx-auto w-full max-w-5xl px-4 md:px-8">
+      <div class="mb-10 flex flex-col gap-2">
+        <h2
+          class="text-paper-foreground font-serif text-2xl font-bold tracking-tight"
+        >
+          Kind words
+        </h2>
+        <p class="text-paper-foreground/70 max-w-[72ch] text-sm sm:text-base">
+          Notes from people I have worked alongside.
+        </p>
+      </div>
+      <ul class="grid gap-5 sm:grid-cols-3">
+        <li class="quote-card sig-enter bg-background rounded-md p-5 shadow-sm">
+          <blockquote class="text-sm leading-relaxed">
+            Nhut shipped a complex integration ahead of schedule and documented
+            every decision along the way.
+          </blockquote>
+          <p class="text-muted-foreground mt-4 font-mono text-xs">
+            Product Lead, SaaS startup
+          </p>
+        </li>
+        <li
+          class="quote-card sig-enter bg-background rounded-md p-5 shadow-sm"
+          style="animation-delay: 80ms"
+        >
+          <blockquote class="text-sm leading-relaxed">
+            The architecture review paid for itself within a sprint. Clear,
+            direct, no theater.
+          </blockquote>
+          <p class="text-muted-foreground mt-4 font-mono text-xs">
+            CTO, logistics scale-up
+          </p>
+        </li>
+        <li
+          class="quote-card sig-enter bg-background rounded-md p-5 shadow-sm"
+          style="animation-delay: 160ms"
+        >
+          <blockquote class="text-sm leading-relaxed">
+            The rare consultant who writes things down so the team can carry on
+            without him.
+          </blockquote>
+          <p class="text-muted-foreground mt-4 font-mono text-xs">
+            Engineering Manager, fintech
+          </p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="py-16 sm:py-24 lg:py-32">
+    <div class="mb-10 flex flex-col gap-2">
+      <h2 class="font-serif text-2xl font-bold tracking-tight">Work with me</h2>
+      <p class="text-muted-foreground max-w-[72ch] text-sm sm:text-base">
+        Indicative tiers for consulting work, shaped around how engagements
+        actually start.
+      </p>
+    </div>
+    <ul class="grid items-start gap-5 sm:grid-cols-3">
+      <li
+        class="sig-enter bg-navy-alt flex flex-col gap-4 rounded-md border border-border p-6"
+      >
+        <h3 class="font-medium text-lg">Advisory Session</h3>
+        <p class="font-serif text-2xl font-bold">
+          2.500.000 VND
+          <span class="text-muted-foreground font-sans text-sm font-normal">
+            per session
+          </span>
+        </p>
+        <ul class="text-muted-foreground flex flex-col gap-2 text-sm">
+          <li>90-minute focused call</li>
+          <li>Written summary and next steps</li>
+          <li>Follow-up questions included</li>
+        </ul>
+        <div class="mt-auto pt-2">
+          <Button href={mailto} variant="secondary" class="w-full">
+            Enquire
+          </Button>
+        </div>
+      </li>
+      <li
+        class="sig-enter flex flex-col gap-4 rounded-md border border-t-2 border-paper-foreground/10 bg-paper p-6 text-paper-foreground lg:-translate-y-2"
+        style="animation-delay: 80ms; border-top-color: var(--gold)"
+      >
+        <p
+          class="text-paper-foreground/70 font-mono text-xs tracking-wide uppercase"
+        >
+          Most requested
+        </p>
+        <h3 class="font-medium text-lg">Sprint Partnership</h3>
+        <p class="font-serif text-2xl font-bold">
+          45.000.000 VND
+          <span class="text-paper-foreground/70 font-sans text-sm font-normal">
+            from, per sprint
+          </span>
+        </p>
+        <ul class="text-paper-foreground/80 flex flex-col gap-2 text-sm">
+          <li>Two-week embedded engagement</li>
+          <li>Architecture and code hands-on</li>
+          <li>Daily progress notes</li>
+        </ul>
+        <div class="mt-auto pt-2">
+          <Button href={mailto} class="w-full"> Enquire </Button>
+        </div>
+      </li>
+      <li
+        class="sig-enter bg-navy-alt flex flex-col gap-4 rounded-md border border-border p-6"
+        style="animation-delay: 160ms"
+      >
+        <h3 class="font-medium text-lg">Long-Term Retainer</h3>
+        <p class="font-serif text-2xl font-bold">
+          Custom
+          <span class="text-muted-foreground font-sans text-sm font-normal">
+            monthly arrangement
+          </span>
+        </p>
+        <ul class="text-muted-foreground flex flex-col gap-2 text-sm">
+          <li>Monthly advisory cadence</li>
+          <li>Priority access</li>
+          <li>Quarterly roadmap review</li>
+        </ul>
+        <div class="mt-auto pt-2">
+          <Button href={mailto} variant="secondary" class="w-full">
+            Enquire
+          </Button>
+        </div>
+      </li>
+    </ul>
+  </section>
+
   {latestPosts?.length > 0 && (
       <section class="py-16 sm:py-24 lg:py-32">
         <div class="mb-4 flex items-baseline justify-between gap-4">
@@ -39,4 +264,51 @@ const latestPosts = posts.slice(0, 5);
         </ul>
       </section>
     )}
+
+  <section class="py-16 sm:py-24">
+    <div class="flex flex-col items-center gap-6 text-center">
+      <div class="bg-gold h-px w-16" />
+      <h2 class="font-serif text-3xl font-bold tracking-tight">
+        Let us build something durable.
+      </h2>
+      <p class="text-muted-foreground max-w-[60ch] text-sm sm:text-base">
+        Tell me what you are working on, and I will tell you honestly whether I
+        can help.
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <Button href={mailto}>Start a conversation</Button>
+        <a
+          href="/blog/"
+          class="text-foreground/70 hover:text-foreground text-sm underline-offset-4 transition-colors hover:underline"
+        >
+          or read the blog
+        </a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+.testimonials-band {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  background: var(--paper);
+}
+
+.quote-card blockquote {
+  position: relative;
+  padding-top: 2.75rem;
+}
+
+.quote-card blockquote::before {
+  content: "\201C";
+  position: absolute;
+  top: 0;
+  left: -0.25rem;
+  font-family: var(--font-source-serif);
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--gold);
+}
+</style>

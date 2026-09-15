@@ -6,38 +6,119 @@ const hero = siteConfig.hero;
 ---
 
 {(hero?.title || hero?.text) && (
-    <section>
-      {hero.title && (
-        <h1 class="sig-enter font-serif text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-tight">
-          {hero.title}
-        </h1>
-      )}
-      {hero.text && (
-        <p
-          class="sig-enter mt-5 max-w-[72ch] text-base leading-relaxed sm:text-lg"
-          style="animation-delay: 80ms"
-        >
-          {hero.text}
-        </p>
-      )}
-      <div
-        class="sig-enter bg-gold mt-8 h-px w-16"
-        style="animation-delay: 160ms"
-      />
-      {hero.cta && hero.cta.length > 0 && (
+    <section class="lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-16">
+      <div>
+        {hero.title && (
+          <h1 class="sig-enter font-serif text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-tight">
+            {hero.title}
+          </h1>
+        )}
+        {hero.text && (
+          <p
+            class="sig-enter mt-5 max-w-[72ch] text-base leading-relaxed sm:text-lg"
+            style="animation-delay: 80ms"
+          >
+            {hero.text}
+          </p>
+        )}
         <div
-          class="sig-enter mt-8 flex flex-wrap items-center gap-3"
-          style="animation-delay: 240ms"
-        >
-          {hero.cta.map((link, index) => (
-            <Button
-              href={link.href}
-              variant={index === 0 ? "primary" : "secondary"}
-            >
-              {link.text}
-            </Button>
-          ))}
+          class="sig-enter bg-gold mt-8 h-px w-16"
+          style="animation-delay: 160ms"
+        />
+        {hero.cta && hero.cta.length > 0 && (
+          <div
+            class="sig-enter mt-8 flex flex-wrap items-center gap-3"
+            style="animation-delay: 240ms"
+          >
+            {hero.cta.map((link, index) => (
+              <Button
+                href={link.href}
+                variant={index === 0 ? "primary" : "secondary"}
+              >
+                {link.text}
+              </Button>
+            ))}
+          </div>
+        )}
+      </div>
+      <div
+        class="sig-enter mt-16 hidden lg:mt-0 lg:block"
+        style="animation-delay: 320ms"
+        aria-hidden="true"
+      >
+        <div class="hero-float">
+          <div class="hero-plane"></div>
+          <div class="hero-card">
+            <span>N</span>
+          </div>
+          <div class="hero-ring"></div>
         </div>
-      )}
+      </div>
     </section>
   )}
+
+<style>
+.hero-float {
+  position: relative;
+  width: 20rem;
+  height: 24rem;
+}
+
+.hero-plane {
+  position: absolute;
+  inset: 3rem 2rem;
+  border-radius: var(--radius);
+  box-shadow:
+    1.5rem 1.5rem 0 var(--navy-alt),
+    3rem 3rem 0 color-mix(in srgb, var(--navy-alt) 60%, transparent);
+}
+
+.hero-card {
+  position: absolute;
+  inset: 3rem 2rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--paper-foreground);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  transform: rotate(2deg);
+}
+
+.hero-card span {
+  font-family: var(--font-source-serif);
+  font-size: 11rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.hero-ring {
+  position: absolute;
+  top: 0.5rem;
+  right: -1.25rem;
+  z-index: 3;
+  width: 6.5rem;
+  height: 6.5rem;
+  border: 1px solid var(--gold);
+  border-radius: 9999px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-float {
+    animation: hero-float 8s ease-in-out infinite;
+  }
+
+  @keyframes hero-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+}
+</style>

@@ -6,7 +6,10 @@ const currentYear = new Date().getFullYear();
 const socialLinks = siteConfig.socialLinks || [];
 const footerNavLinks = [
   ...(siteConfig.primaryNavLinks ?? []),
+  { text: "Contact", href: "mailto:hello@nhutduong.com" },
   { text: "RSS Feed", href: "/rss.xml" },
+  { text: "Privacy", href: "/privacy/" },
+  { text: "Terms", href: "/terms/" },
 ];
 ---
 
