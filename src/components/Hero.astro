@@ -6,26 +6,50 @@ const hero = siteConfig.hero;
 ---
 
 {(hero?.title || hero?.text) && (
-    <section>
-      {hero.title && (
-        <h1 class="font-serif text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-tight">
-          {hero.title}
-        </h1>
-      )}
-      {hero.text && (
-        <p class="mt-5 text-base leading-relaxed sm:text-lg">{hero.text}</p>
-      )}
-      {hero.cta && hero.cta.length > 0 && (
-        <div class="mt-8 flex flex-wrap items-center gap-3">
-          {hero.cta.map((link, index) => (
-            <Button
-              href={link.href}
-              variant={index === 0 ? "primary" : "secondary"}
-            >
-              {link.text}
-            </Button>
-          ))}
+    <section class="relative">
+      <div class="grid items-center gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
+        <div>
+          <p class="font-mono text-sm font-medium text-foreground/70">
+            <span class="mr-3 inline-block h-px w-8 translate-y-[-4px] bg-gold" aria-hidden="true" />
+            Full Stack Developer &amp; Consultant — Ho Chi Minh City
+          </p>
+          {hero.title && (
+            <h1 class="mt-5 font-serif text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-tight">
+              {hero.title}
+            </h1>
+          )}
+          {hero.text && (
+            <p class="mt-5 max-w-[72ch] text-base leading-relaxed text-foreground/70 sm:text-lg">
+              {hero.text}
+            </p>
+          )}
+          {hero.cta && hero.cta.length > 0 && (
+            <div class="mt-8 flex flex-wrap items-center gap-3">
+              {hero.cta.map((link, index) => (
+                <Button
+                  href={link.href}
+                  variant={index === 0 ? "primary" : "secondary"}
+                >
+                  {link.text}
+                </Button>
+              ))}
+            </div>
+          )}
         </div>
-      )}
+        <div class="hidden lg:block" aria-hidden="true">
+          <div class="relative mx-auto aspect-[4/5] w-full max-w-[26rem]">
+            <div class="absolute inset-x-0 bottom-0 top-24 border border-gold/40" />
+            <div class="absolute inset-x-10 bottom-14 top-0 bg-navy-alt" />
+            <div class="absolute bottom-0 left-6 right-16 h-px bg-gold" />
+            <div class="absolute bottom-14 left-0 right-0 h-px bg-gold" />
+            <div class="absolute top-0 left-0 h-px w-24 bg-gold" />
+            <div class="absolute top-1/2 left-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/60" />
+            <span class="absolute top-1/2 left-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold" />
+            <span class="font-mono absolute bottom-5 left-6 text-[0.6875rem] tracking-widest text-foreground/60 uppercase">
+              EST. 2020 — N. Duong
+            </span>
+          </div>
+        </div>
+      </div>
     </section>
   )}
