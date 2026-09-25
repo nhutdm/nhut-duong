@@ -47,7 +47,7 @@
 <script>
 const THEME_STORAGE_KEY = "theme";
 const darkScheme = window.matchMedia("(prefers-color-scheme: dark)");
-const THEME_COLORS = { light: "#ffffff", dark: "#09090b" } as const;
+const THEME_COLORS = { light: "#f0ece3", dark: "#1c2644" } as const;
 
 function getStoredTheme(): "light" | "dark" | null {
   const stored = localStorage.getItem(THEME_STORAGE_KEY);

@@ -15,7 +15,7 @@ const hasNext = Boolean(page.url.next);
       {hasPrev ? (
         <a
           href={page.url.prev}
-          class="text-foreground/60 hover:text-foreground transition-colors"
+          class="text-foreground/70 hover:text-foreground transition-colors"
           rel="prev"
         >
           &larr; Previous
@@ -25,13 +25,13 @@ const hasNext = Boolean(page.url.next);
           &larr; Previous
         </span>
       )}
-      <span class="text-foreground/60">
+      <span class="text-foreground/70">
         Page {page.currentPage} of {page.lastPage}
       </span>
       {hasNext ? (
         <a
           href={page.url.next}
-          class="text-foreground/60 hover:text-foreground transition-colors"
+          class="text-foreground/70 hover:text-foreground transition-colors"
           rel="next"
         >
           Next &rarr;

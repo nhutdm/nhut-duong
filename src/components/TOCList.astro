@@ -11,7 +11,7 @@ const { headings, class: className } = Astro.props;
 ---
 
 <toc-heading class={className}>
-  <ul class="text-foreground/60 grid gap-3 pl-3 text-sm">
+  <ul class="text-foreground/70 grid gap-3 pl-3 text-sm">
     {headings.map((heading) => (
       <TOCHeading heading={heading} />
     ))}

@@ -54,7 +54,7 @@ export function createPersonSchema(): WithContext<Person> {
     url: new URL("about", getSiteUrl()).toString(),
     sameAs: socialLinks.map((link) => link.href),
     description:
-      "I'm a full stack developer and consultant based in Ho Chi Minh City, Vietnam, obsessed with crafting seamless, impactful digital solutions.",
+      "I'm a full stack developer and consultant based in Ho Chi Minh City, Vietnam, focused on crafting reliable, impactful digital solutions.",
     knowsAbout: [
       "Full Stack Development",
       "Web Development",

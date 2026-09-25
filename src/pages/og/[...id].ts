@@ -11,8 +11,8 @@ export const { getStaticPaths, GET } = await OGImageRoute({
   getImageOptions: (_, page: (typeof pages)[number]) => {
     return {
       title: page.data.title,
-      bgGradient: [[255, 255, 255]],
-      border: { color: [113, 113, 122], width: 10 },
+      bgGradient: [[240, 236, 227]],
+      border: { color: [200, 168, 112], width: 10 },
       padding: 60,
       logo: {
         path: "./public/android-chrome-512x512.png",
@@ -20,14 +20,14 @@ export const { getStaticPaths, GET } = await OGImageRoute({
       },
       font: {
         title: {
-          color: [9, 10, 11],
+          color: [28, 38, 68],
           size: 60,
           lineHeight: 1.25,
-          families: ["Newsreader"],
-          weight: "SemiBold",
+          families: ["Source Serif 4"],
+          weight: "Bold",
         },
       },
-      fonts: ["./src/assets/fonts/newsreader-latin-500-normal.ttf"],
+      fonts: ["./src/assets/fonts/source-serif-4-latin-700-normal.ttf"],
     };
   },
 });

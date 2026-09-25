@@ -15,7 +15,7 @@ const { title, publishDate, tags = [] } = post.data;
 <li class:list={[className]}>
   <span class="font-medium"><a href={`/blog/${post.id}/`}>{title}</a></span>
   <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
-    <span class="text-foreground/60 text-sm">
+    <span class="text-foreground/70 text-sm">
       <FormattedDate date={publishDate} />
     </span>
     {!hideTags && (

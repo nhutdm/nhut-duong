@@ -59,9 +59,9 @@ const blogPostingSchema = createBlogPostingSchema(post, postUrl, authorSchema);
   customSchemas={[blogPostingSchema]}
 >
   <div>
-    <h1 class="font-serif text-4xl font-medium sm:text-[2.5rem]">{title}</h1>
+    <h1 class="font-serif text-[2.25rem] font-bold">{title}</h1>
     <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2">
-      <span class="text-foreground/60 text-sm">
+      <span class="text-foreground/70 text-sm">
         {updatedDate ? (
             <>
               Updated on <FormattedDate date={updatedDate} />
@@ -72,7 +72,7 @@ const blogPostingSchema = createBlogPostingSchema(post, postUrl, authorSchema);
             </>
           )}
       </span>
-      <span class="text-foreground/60 text-sm">{readingTime} min read</span>
+      <span class="text-foreground/70 text-sm">{readingTime} min read</span>
       <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
         {tags.length > 0 &&
           tags.map((tag) => (
@@ -100,7 +100,7 @@ const blogPostingSchema = createBlogPostingSchema(post, postUrl, authorSchema);
       {olderPost ? (
         <a
           href={`/blog/${olderPost.id}/`}
-          class="hover:text-foreground/80 text-foreground/60 transition-colors"
+          class="hover:text-foreground/80 text-foreground/70 transition-colors"
         >
           <span class="text-xs">
             &larr; Older post
@@ -113,7 +113,7 @@ const blogPostingSchema = createBlogPostingSchema(post, postUrl, authorSchema);
       {newerPost && (
         <a
           href={`/blog/${newerPost.id}/`}
-          class="hover:text-foreground/80 text-foreground/60 transition-colors sm:text-right"
+          class="hover:text-foreground/80 text-foreground/70 transition-colors sm:text-right"
         >
           <span class="text-xs">Newer post &rarr;</span>
           <span class="block font-medium">{newerPost.data.title}</span>
