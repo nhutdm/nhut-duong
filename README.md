@@ -4,7 +4,7 @@ Personal site built with [Astro](https://astro.build) — static output, TypeScr
 
 ## Tech Stack
 
-- [Astro](https://astro.build) ^7.2.9 (static output, zero-JS) — MDX, sitemap, RSS, Fonts API (self-hosted Inter + Newsreader via the Fontsource provider), dynamic OG images (`astro-og-canvas`)
+- [Astro](https://astro.build) ^7.3.2 (static output, zero-JS) — MDX, sitemap, RSS, Fonts API (self-hosted DM Sans + Source Serif 4 + IBM Plex Mono via the Fontsource provider), dynamic OG images (`astro-og-canvas`)
 - [Tailwind CSS](https://tailwindcss.com) v4 via the `@tailwindcss/vite` plugin (+ `@tailwindcss/typography`, shadcn-style theme tokens in `src/styles/global.css`)
 - [Biome](https://biomejs.dev) 2.x for linting and formatting (incl. `.astro` files)
 - TypeScript with the `astro/tsconfigs/strict` preset

@@ -34,6 +34,14 @@ export function createWebSiteSchema(url: string): WithContext<WebSite> {
   };
 }
 
+function isSelfDomainUrl(href: string): boolean {
+  try {
+    return new URL(href).hostname === new URL(getSiteUrl()).hostname;
+  } catch {
+    return false;
+  }
+}
+
 export function createPersonSchema(): WithContext<Person> {
   const socialLinks = siteConfig.socialLinks || [];
 
@@ -51,8 +59,10 @@ export function createPersonSchema(): WithContext<Person> {
       addressLocality: "Ho Chi Minh City",
       addressCountry: "Vietnam",
     },
-    url: new URL("about", getSiteUrl()).toString(),
-    sameAs: socialLinks.map((link) => link.href),
+    url: new URL("about/", getSiteUrl()).toString(),
+    sameAs: socialLinks
+      .map((link) => link.href)
+      .filter((href) => !isSelfDomainUrl(href)),
     description:
       "I'm a full stack developer and consultant based in Ho Chi Minh City, Vietnam, focused on crafting reliable, impactful digital solutions.",
     knowsAbout: [
@@ -99,16 +109,18 @@ export function createBlogPostingSchema(
 ): WithContext<BlogPosting> {
   const { title, excerpt, publishDate, updatedDate, tags = [] } = post.data;
 
-  const blogUrl = url.startsWith("http")
+  const resolvedUrl = url.startsWith("http")
     ? url
     : new URL(url, getSiteUrl()).toString();
-  const blogBaseUrl = new URL("blog", getSiteUrl()).toString();
+  const blogUrl = resolvedUrl.endsWith("/") ? resolvedUrl : `${resolvedUrl}/`;
+  const blogBaseUrl = new URL("blog/", getSiteUrl()).toString();
 
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: title,
     description: excerpt,
+    image: new URL(`og/${post.id}.png`, getSiteUrl()).toString(),
     url: blogUrl,
     datePublished: publishDate.toISOString(),
     dateModified: (updatedDate || publishDate).toISOString(),

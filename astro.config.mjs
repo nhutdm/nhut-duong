@@ -8,19 +8,25 @@ import { defineConfig, fontProviders } from "astro/config";
 
 const blogDir = new URL("./src/content/blog/", import.meta.url);
 
+/** @param {string} url @returns {Date | undefined} */
 function getBlogLastmod(url) {
   const match = url.match(/\/blog\/([^/]+)\/?$/);
   const slug = match?.[1];
   if (!slug) return undefined;
+  let content;
   try {
-    const content = readFileSync(new URL(`${slug}.md`, blogDir), "utf-8");
-    const updated = content.match(/^updatedDate:\s*['"]?([\d-]{10})/m)?.[1];
-    const published = content.match(/^publishDate:\s*['"]?([\d-]{10})/m)?.[1];
-    const date = updated ?? published;
-    return date ? new Date(date) : undefined;
+    content = readFileSync(new URL(`${slug}.md`, blogDir), "utf-8");
   } catch {
-    return undefined;
+    try {
+      content = readFileSync(new URL(`${slug}.mdx`, blogDir), "utf-8");
+    } catch {
+      return undefined;
+    }
   }
+  const updated = content.match(/^updatedDate:\s*['"]?([\d-]{10})/m)?.[1];
+  const published = content.match(/^publishDate:\s*['"]?([\d-]{10})/m)?.[1];
+  const date = updated ?? published;
+  return date ? new Date(date) : undefined;
 }
 
 // https://astro.build/config
@@ -65,7 +71,7 @@ export default defineConfig({
     sitemap({
       serialize(item) {
         const lastmod = getBlogLastmod(item.url);
-        return lastmod ? { ...item, lastmod } : item;
+        return lastmod ? { ...item, lastmod: lastmod.toISOString() } : item;
       },
     }),
   ],

@@ -42,7 +42,7 @@ const ogImage = {
 };
 const { Content, headings } = await render(post);
 
-const postUrl = new URL(`/blog/${post.id}`, Astro.site).toString();
+const postUrl = new URL(`/blog/${post.id}/`, Astro.site).toString();
 const authorSchema = createPersonSchema();
 const blogPostingSchema = createBlogPostingSchema(post, postUrl, authorSchema);
 ---

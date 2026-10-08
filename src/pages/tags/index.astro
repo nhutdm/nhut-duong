@@ -24,7 +24,7 @@ const tagsWithCount = tags
   description="Explore topics I write about, from software development to web technologies. Click on any tag to discover related articles and insights."
 >
   <section>
-    <h1 class="font-serif text-4xl font-semibold sm:text-[2.5rem]">Tags</h1>
+    <h1 class="font-serif text-[2.25rem] font-bold">Tags</h1>
     <p class="mt-5 mb-6 text-base leading-relaxed sm:text-lg">
       Explore topics I write about, from software development to web
       technologies. Click on any tag to discover related articles and insights.
@@ -45,7 +45,7 @@ const tagsWithCount = tags
             <h2 class="font-serif text-2xl font-medium sm:text-3xl">
               Popular Tags
             </h2>
-            <div class="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-2">
+            <div class="mt-4 grid gap-3 sm:grid-cols-2">
               {tagsWithCount.slice(0, 9).map((tag) => (
                 <a href={`/tags/${tag.id}/`} class="font-medium">
                   <div class="flex items-center justify-between rounded-lg border p-3">

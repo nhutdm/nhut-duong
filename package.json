@@ -13,7 +13,7 @@
     "lint": "biome lint --write",
     "format": "biome format --write",
     "check": "biome check --write",
-    "ci": "biome ci"
+    "ci": "biome ci && astro check"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.0.1",
@@ -27,9 +27,11 @@
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "@biomejs/biome": "^2.5.13",
     "@tailwindcss/typography": "^0.5.20",
     "schema-dts": "^2.0.0",
+    "typescript": "^6.0.3",
     "wrangler": "^4.131.1"
   }
 }

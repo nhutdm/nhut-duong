@@ -106,11 +106,12 @@ export function generateBreadcrumbStructuredData(
   baseUrl?: string,
 ) {
   const siteUrl = baseUrl || import.meta.env.SITE || "https://nhutduong.com";
+  const structuredItems = items.filter((item) => !/^\d+$/.test(item.label));
 
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: items.map((item, index) => {
+    itemListElement: structuredItems.map((item, index) => {
       const listItem: {
         "@type": "ListItem";
         position: number;

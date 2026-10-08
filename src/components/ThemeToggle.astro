@@ -44,6 +44,15 @@
   </svg>
 </button>
 
+<script is:inline>
+document
+  .getElementById("theme-toggle")
+  ?.setAttribute(
+    "aria-pressed",
+    String(document.documentElement.classList.contains("dark")),
+  );
+</script>
+
 <script>
 const THEME_STORAGE_KEY = "theme";
 const darkScheme = window.matchMedia("(prefers-color-scheme: dark)");
@@ -90,6 +99,8 @@ document.addEventListener("astro:after-swap", () => {
     "dark",
     stored ? stored === "dark" : darkScheme.matches,
   );
+  syncToggleButton();
+  syncThemeColor();
 });
 
 darkScheme.addEventListener("change", () => {
