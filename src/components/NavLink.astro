@@ -11,6 +11,9 @@ const isActive =
   typeof href === "string" &&
   href !== "/" &&
   normalize(pathname).startsWith(normalize(href));
+const isExternal =
+  typeof href === "string" && /^https?:\/\//.test(href) &&
+  !href.startsWith(Astro.site?.origin ?? "\u0000");
 ---
 
 <a
@@ -19,10 +22,11 @@ const isActive =
     className,
     isActive
       ? "border-gold font-medium text-foreground"
-      : "border-transparent text-foreground/70",
+      : "border-transparent text-foreground/70 hover:border-gold/60 hover:text-foreground",
   ]}
   href={href}
   aria-current={isActive ? "page" : undefined}
+  {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
   {...props}
   ><slot /></a
 >

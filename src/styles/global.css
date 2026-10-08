@@ -104,6 +104,37 @@
   }
 }
 
+@media print {
+  header,
+  footer,
+  nav,
+  #theme-toggle,
+  .toc,
+  .pagination {
+    display: none;
+  }
+
+  main {
+    max-width: 100%;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  .prose pre,
+  .prose code {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.875em;
+  }
+}
+
 .prose {
   --tw-prose-body: var(--foreground);
   --tw-prose-headings: var(--foreground);
